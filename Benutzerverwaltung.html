@@ -2,7 +2,7 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T16:28:10.360Z
+date: 2026-06-01T16:30:02.762Z
 tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: ckeditor
 dateCreated: 2026-06-01T15:39:18.494Z
@@ -132,6 +132,7 @@ group:&nbsp;&nbsp;compat&nbsp;winbind</code></pre>
 <pre><code class="language-plaintext">Kommandozeilenparameter: --lang [DE,EN] </code></pre>
 <p><strong>Identifizierungsmerkmal:</strong> legt fest wie die Benutzer identifiziert werden. Dafür gibt es 3 Möglichkeiten: Durch Nachname, Vorname und Geburtstag oder durch das Benutzerkürzel, womit man sich am CRANIX anmeldet oder durch einen externen Identifikator.</p>
 <pre><code class="language-plaintext">Kommandozeilenparameter: --identifier [sn-gn-bd,uid,uuid]</code></pre>
+<p>&nbsp;</p>
 <blockquote>
   <p><i>WICHTIG</i> hat man <strong>Benutzerkürzel</strong> oder <strong>Kennung (uuid)</strong> gewählt, muss dieser auch in der Importdatei vorhanden sein</p>
 </blockquote>
@@ -245,12 +246,14 @@ group:&nbsp;&nbsp;compat&nbsp;winbind</code></pre>
 </ul>
 <p><strong>Ergebnis</strong> &lt;br&gt; Nach dem Abarbeiten der eingelesenen Datei wird die<br>neue, aktuelle Benutzerliste pro Klasse in der Datei<br><strong>/home/groups/SYSADMINS/userimports/&lt;datum&gt;.&lt;uhrzeit&gt;/userlist.&lt;KLASSE&gt;.txt</strong><br>im Gruppenverzeichnis der Systemadministratoren gespeichert. In dieser<br>Datei stehen die Passwörter im Klartext und muss dementsprechend mit<br>Vorsicht behandelt werden.</p>
 <p>Hier ist eine Beispieldatei für das erste Laden des Systems mit<br>unterschiedlichen Passwort-Vergaben:</p>
-<pre><code class="language-plaintext">GEBURTSTAG:NACHNAME:VORNAME:PASSWORT:KLASSE&nbsp;
-11.10.1986:Klein:Aladar:12345:9A&nbsp;
-4.08.1986:Micuc:Emil::9A
-09.11.1986:Groß:Evelyn:*:9A&nbsp;
-17.04.1986:Müller:Helmuth:*:9A&nbsp;10A:&nbsp;
-29.9.1987:Klein:Aladar:*:10A</code></pre>
+<blockquote>
+  <p>GEBURTSTAG:NACHNAME:VORNAME:PASSWORT:KLASSE&nbsp;</p>
+  <p>11.10.1986:Klein:Aladar:12345:9A&nbsp;</p>
+  <p>4.08.1986:Micuc:Emil::9A</p>
+  <p>09.11.1986:Groß:Evelyn:*:9A&nbsp;</p>
+  <p>17.04.1986:Müller:Helmuth:*:9A&nbsp;10A:&nbsp;</p>
+  <p>29.9.1987:Klein:Aladar:*:10A</p>
+</blockquote>
 <p>Die resultierenden Dateien:</p>
 <ul>
   <li>/home/groups/SYSADMINS/userimports/&lt;datum&gt;.&lt;uhrzeit&gt;/userlist.9A.txt</li>
