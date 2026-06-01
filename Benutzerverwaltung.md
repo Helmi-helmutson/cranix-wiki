@@ -2,13 +2,11 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T08:55:27.246Z
-tags: benutzer, passwort, anlegen, löschen, bearbeiten, editieren,
+date: 2026-06-01T16:23:35.946Z
+tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: markdown
-dateCreated: 2026-05-29T08:14:05.819Z
+dateCreated: 2026-06-01T15:39:18.494Z
 ---
-
-
 
 Während der Installation vom CRANIX werden mehrere Benutzer angelegt,
 die für verschiedene Funktionen des Servers notwendig sind:
@@ -29,8 +27,8 @@ die für verschiedene Funktionen des Servers notwendig sind:
 
 Normalerweise pflegt Linux die Systembenutzer UNIX-gemäß in den Dateien /etc/passwd und /etc/shadow. Nur der Benutzer **root** vom CRANIX-Server ist in diesen Dateien zu finden. Der CRANIX-Server ist ein AD-Samba-Server und die weiteren Benutzer werden in der SAMBA-LDAP-Datenbank gespeichert. Damit diese auf Linux-Ebene auch sichtbar sind: wird auf dem SAMBA-Server auch der **winbind** Dienst gestartet. Dieser sorgt dafür, dass die SAMBA-Benutzer und Gruppen-SIDs in UNIX **uidNumber** und **gidNumber** umgewandelt werden. Dies geschieht durch folgende Einstellungen in der Datei **/etc/nsswitch.conf**:
 
-	passwd: compat winbind
- 	group:  compat winbind
+   passwd: compat winbind
+   group:  compat winbind
 
 Zwar sind die Benutzer auf dem CRANIX-Server sichtbar und die Dateien können zugeordnet werden, jedoch ist zunächst eine Authentifizierung für Dienste über eine PAM-Schnittstelle (ssh, login, sftp, ftp, cyrus ...) nicht möglich. Wenn Sie zum Beispiel den SAMBA-Benutzern auch ssh Zugang zum CRANIX-Server gewähren möchten, muss dafür auch PAM konfiguriert werden:
 
