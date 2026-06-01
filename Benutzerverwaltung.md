@@ -2,8 +2,8 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T16:38:46.468Z
-tags: benutzer, passwort, anlegen, löschen, bearbeiten, editieren,
+date: 2026-06-01T16:48:46.979Z
+tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: markdown
 dateCreated: 2026-06-01T15:39:18.494Z
 ---
@@ -146,56 +146,35 @@ Kommandozeilenparameter: --full Dieser Parameter hat keinen Wert.
 ```
 
 **Importdatei enthält alle Klassen. Andere werden gelöscht.**  
-Dieser  
-Parameter hat nur dann einen Einfluss auf den Import, wenn Schüler  
-importiert werden. Wird dieser Parameter angegeben wird, werden die  
-Klassen, die in der Importdatei nicht vorkommen, aus dem System  
-gelöscht.
+Dieser Parameter hat nur dann einen Einfluss auf den Import, wenn Schüler  importiert werden. Wird dieser Parameter angegeben wird, werden die Klassen, die in der Importdatei nicht vorkommen, aus dem System gelöscht.
 
 ```plaintext
 Kommandozeilenparameter: --allClasses Dieser Parameter hat keinen Wert.
 ```
 
 **Klassenverzeichnisse leeren:**  
-Nach dem Import werden alle  
-Klassenverzeichnisse gelöscht und neu  
-angelegt.
+Nach dem Import werden alle Klassenverzeichnisse gelöscht und neu angelegt.
 
 ```plaintext
 Kommandozeilenparameter: --cleanClassDirs Dieser Parameter hat keinen Wert.
 ```
 
 **Passwörter für alte Benutzer auch setzen.:**  
-Wird dieser Parameter  
-aktiviert, werden auch den vorhandenen Benutzern neue Passwörter  
-zugewiesen. Wurde im Feld **Passwort** eingegeben, wird dieses  
-verwendet, sonst bekommt jeder Benutzer ein zufällig generiertes  
-Passwort. Sie haben auch die Möglichkeit das Passwort in der  
-Importdatei festzulegen.
+Wird dieser Parameter aktiviert, werden auch den vorhandenen Benutzern neue Passwörter zugewiesen. Wurde im Feld **Passwort** eingegeben, wird dieses  verwendet, sonst bekommt jeder Benutzer ein zufällig generiertes Passwort. Sie haben auch die Möglichkeit das Passwort in der Importdatei festzulegen.
 
 ```plaintext
 Kommandozeilenparameter: --resetPassword Dieser Parameter hat keinen Wert.
 ```
 
 **Geburtsdatum an das Passwort anhängen.:**  
-Ist dieser Schalter aktiv  
-bekommen neue Benutzer, oder wenn **Passwort zurücksetzten:** aktiv  
-ist, alle Benutzer das eigene Geburtsdatum in Form JJJJ-MM-DD als  
-Passwort gesetzt. Wird im Feld **Passwort** auch etwas eingetragen,  
-wird das vor das Geburtsdatum gesetzt.
+Ist dieser Schalter aktiv bekommen neue Benutzer, oder wenn **Passwort zurücksetzten:** aktiv ist, alle Benutzer das eigene Geburtsdatum in Form JJJJ-MM-DD als Passwort gesetzt. Wird im Feld **Passwort** auch etwas eingetragen, wird das vor das Geburtsdatum gesetzt.
 
 ```plaintext
 Kommandozeilenparameter: --appendBirthdayToPassword Dieser Parameter hat keinen Wert.
 ```
 
 **Klassennamen an das Passwort anhängen.:**  
-Ist dieser Schalter aktiv  
-bekommen neue Benutzer, oder wenn **Passwort zurücksetzten:** aktiv  
-ist, alle Benutzer den eigenen Klassennamen als Passwort gesetzt. Wird  
-im Feld **Passwort** auch etwas eingetragen, wird das vor den  
-Klassennamen gesetzt. Diese Parameter kann auch mit **Geburtsdatum an**  
-**das Passwort anhängen.** kombiniert  
-werden.
+Ist dieser Schalter aktiv bekommen neue Benutzer, oder wenn **Passwort zurücksetzten:** aktiv ist, alle Benutzer den eigenen Klassennamen als Passwort gesetzt. Wird im Feld **Passwort** auch etwas eingetragen, wird das vor den Klassennamen gesetzt. Diese Parameter kann auch mit **Geburtsdatum an das Passwort anhängen.** kombiniert werden.
 
 ```plaintext
 Kommandozeilenparameter: --appendClassToPassword Dieser Parameter hat keinen Wert.
@@ -203,9 +182,7 @@ Kommandozeilenparameter: --appendClassToPassword Dieser Parameter hat keinen Wer
 
 ### Format der Import CSV-Datei
 
-In der ersten Zeile werden die Spalten und das Trennzeichen der Datei  
-definiert. Zur Zeit sind folgende Schlüsselwörter erlaubt, Pflichtfelder  
-sind als solche vermerkt:
+In der ersten Zeile werden die Spalten und das Trennzeichen der Datei definiert. Zur Zeit sind folgende Schlüsselwörter erlaubt, Pflichtfelder sind als solche vermerkt:
 
 | Feldname | Pflichtfeld/Bedeutung | Syntax |
 | --- | --- | --- |
@@ -251,24 +228,16 @@ Bei vorhandenen Benutzern wird das Feld PASSWORT nicht ausgewertet. Die Benutzer
 
 > *Hinweis*: Diese Funktion funktioniert nur, wenn sie eine vollständige Liste der Schüler einlesen.
 
--   Steht ein Benutzer in der Datenbank, jedoch nicht in der  
-    Benutzerliste, bedeutet das, dass dieser Benutzer die Schule verlassen  
-    hat.
--   Also werden seine Daten aus der Datenbank gelöscht, sein  
-    Heimatverzeichnis wird in ein Archiv zusammengefasst und unter  
-    **/home/archiv/<benutzername>-<datum>.tgz** gespeichert.
+-   Steht ein Benutzer in der Datenbank, jedoch nicht in der Benutzerliste, bedeutet das, dass dieser Benutzer die Schule verlassen hat.
+-   Also werden seine Daten aus der Datenbank gelöscht, sein Heimatverzeichnis wird in ein Archiv zusammengefasst und unter   **/home/archiv/<benutzername>-<datum>.tgz** gespeichert.
 
-**Ergebnis** <br> Nach dem Abarbeiten der eingelesenen Datei wird die  
-neue, aktuelle Benutzerliste pro Klasse in der Datei  
-**/home/groups/SYSADMINS/userimports/<datum>.<uhrzeit>/userlist.<KLASSE>.txt**  
-im Gruppenverzeichnis der Systemadministratoren gespeichert. In dieser  
-Datei stehen die Passwörter im Klartext und muss dementsprechend mit  
-Vorsicht behandelt werden.
+**Ergebnis**
+Nach dem Abarbeiten der eingelesenen Datei wird die neue, aktuelle Benutzerliste pro Klasse in der Datei **/home/groups/SYSADMINS/userimports/DATUM.UHRZEIT/userlist.KLASSE.txt** im Gruppenverzeichnis der Systemadministratoren gespeichert. In dieser Datei stehen die Passwörter im Klartext und muss dementsprechend mit Vorsicht behandelt werden.
 
 Hier ist eine Beispieldatei für das erste Laden des Systems mit  
 unterschiedlichen Passwort-Vergaben:
 
-```plaintext
+```plaintext{.line-numbers}
 GEBURTSTAG:NACHNAME:VORNAME:PASSWORT:KLASSE 
 11.10.1986:Klein:Aladar:12345:9A 
 4.08.1986:Micuc:Emil::9A
