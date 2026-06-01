@@ -2,7 +2,7 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T16:26:19.052Z
+date: 2026-06-01T16:27:11.229Z
 tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: ckeditor
 dateCreated: 2026-06-01T15:39:18.494Z
@@ -10,6 +10,7 @@ dateCreated: 2026-06-01T15:39:18.494Z
 
 <pre><code class="language-plaintext">Während der Installation vom CRANIX werden mehrere Benutzer angelegt,
 die für verschiedene Funktionen des Servers notwendig sind:</code></pre>
+<p>&nbsp;</p>
 <figure class="table">
   <table>
     <thead>
@@ -93,7 +94,7 @@ die für verschiedene Funktionen des Servers notwendig sind:</code></pre>
 <pre><code class="language-plaintext">passwd:&nbsp;compat&nbsp;winbind
 group:&nbsp;&nbsp;compat&nbsp;winbind</code></pre>
 <p>Zwar sind die Benutzer auf dem CRANIX-Server sichtbar und die Dateien können zugeordnet werden, jedoch ist zunächst eine Authentifizierung für Dienste über eine PAM-Schnittstelle (ssh, login, sftp, ftp, cyrus ...) nicht möglich. Wenn Sie zum Beispiel den SAMBA-Benutzern auch ssh Zugang zum CRANIX-Server gewähren möchten, muss dafür auch PAM konfiguriert werden:</p>
-<p><code>&nbsp;pam-config&nbsp;-a&nbsp;--winbind</code></p>
+<pre><code class="language-plaintext"> pam-config&nbsp;-a&nbsp;--winbind</code></pre>
 <h2>Benutzer einzeln anlegen</h2>
 <p>Wählen Sie im Hauptmenü <strong>Benutzer</strong>. Hier erhalten Sie eine Liste der aktuellen Benutzer. Klicken Sie rechts oben auf das Pluszeichen, um einen Benutzer anzulegen. &lt;br&gt; Folgende Felder müssen beim Anlegen eines neuen Benutzers unbedingt ausgefüllt bzw. gesetzt werden:</p>
 <ul>
