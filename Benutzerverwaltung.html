@@ -2,7 +2,7 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T16:27:11.229Z
+date: 2026-06-01T16:28:10.360Z
 tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: ckeditor
 dateCreated: 2026-06-01T15:39:18.494Z
@@ -127,44 +127,32 @@ group:&nbsp;&nbsp;compat&nbsp;winbind</code></pre>
 <h3>Importparameter</h3>
 <p>Beim Start des Imports kann, bzw. muss man verschiedene Parameter<br>angeben:</p>
 <p><strong>Rolle:</strong> Die Rolle der zu importierenden Benutzer.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --role [administration,students,sysadmins,teachers,templates]
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --role [administration,students,sysadmins,teachers,templates]</code></pre>
 <p><strong>Sprache:</strong> legt die Sprache fest, in der die Kopfzeile der Importdatei geschrieben ist.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --lang [DE,EN] 
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --lang [DE,EN] </code></pre>
 <p><strong>Identifizierungsmerkmal:</strong> legt fest wie die Benutzer identifiziert werden. Dafür gibt es 3 Möglichkeiten: Durch Nachname, Vorname und Geburtstag oder durch das Benutzerkürzel, womit man sich am CRANIX anmeldet oder durch einen externen Identifikator.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --identifier [sn-gn-bd,uid,uuid]
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --identifier [sn-gn-bd,uid,uuid]</code></pre>
 <blockquote>
   <p><i>WICHTIG</i> hat man <strong>Benutzerkürzel</strong> oder <strong>Kennung (uuid)</strong> gewählt, muss dieser auch in der Importdatei vorhanden sein</p>
 </blockquote>
 <p><strong>Als Test ausführen:</strong><br>Es werden keine Änderungen durchgeführt, es<br>wird nur dargestellt, was bei einem Import gemacht werden würde.<br>Welche Benutzer werden neu angelegt, welche gelöscht, welchen Klassen<br>werden die Benutzer zugeordnet.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --test. Dieser Parameter hat keinen Wert.
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --test. Dieser Parameter hat keinen Wert.</code></pre>
 <p><strong>Passwort:</strong><br>Hier kann man ein Passwort für die Benutzer festlegen. Dieses wird in erster Linie nur für die neu angelegten Benutzer verwendet.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --password PASSWORD
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --password PASSWORD</code></pre>
 <p><strong>Passwort bei erster Anmeldung ändern:</strong><br>Benutzer werden bei ihrer<br>ersten Anmeldung an einem Windows-Gerät aufgefordert, ihr Passwort zu<br>ändern. Wurde <strong>Passwort zurücksetzen</strong> aktiviert, bezieht sich diese<br>Einstellung auch auf vorhandene<br>Benutzer.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --mustChange Dieser Parameter hat keinen Wert.
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --mustChange Dieser Parameter hat keinen Wert.</code></pre>
 <p><strong>Importdatei enthält alle Benutzer.:</strong><br>Dieser Parameter hat nur dann<br>einen Einfluss auf den Import, wenn Schüler importiert werden. Ist<br>dieser Parameter gesetzt, werden Schüler, die nicht in der Liste<br>enthalten sind, gelöscht.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --full Dieser Parameter hat keinen Wert.
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --full Dieser Parameter hat keinen Wert.</code></pre>
 <p><strong>Importdatei enthält alle Klassen. Andere werden gelöscht.</strong><br>Dieser<br>Parameter hat nur dann einen Einfluss auf den Import, wenn Schüler<br>importiert werden. Wird dieser Parameter angegeben wird, werden die<br>Klassen, die in der Importdatei nicht vorkommen, aus dem System<br>gelöscht.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --allClasses Dieser Parameter hat keinen Wert.
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --allClasses Dieser Parameter hat keinen Wert.</code></pre>
 <p><strong>Klassenverzeichnisse leeren:</strong><br>Nach dem Import werden alle<br>Klassenverzeichnisse gelöscht und neu<br>angelegt.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --cleanClassDirs Dieser Parameter hat keinen Wert.
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --cleanClassDirs Dieser Parameter hat keinen Wert.</code></pre>
 <p><strong>Passwörter für alte Benutzer auch setzen.:</strong><br>Wird dieser Parameter<br>aktiviert, werden auch den vorhandenen Benutzern neue Passwörter<br>zugewiesen. Wurde im Feld <strong>Passwort</strong> eingegeben, wird dieses<br>verwendet, sonst bekommt jeder Benutzer ein zufällig generiertes<br>Passwort. Sie haben auch die Möglichkeit das Passwort in der<br>Importdatei festzulegen.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --resetPassword Dieser Parameter hat keinen Wert.
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --resetPassword Dieser Parameter hat keinen Wert.</code></pre>
 <p><strong>Geburtsdatum an das Passwort anhängen.:</strong><br>Ist dieser Schalter aktiv<br>bekommen neue Benutzer, oder wenn <strong>Passwort zurücksetzten:</strong> aktiv<br>ist, alle Benutzer das eigene Geburtsdatum in Form JJJJ-MM-DD als<br>Passwort gesetzt. Wird im Feld <strong>Passwort</strong> auch etwas eingetragen,<br>wird das vor das Geburtsdatum gesetzt.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --appendBirthdayToPassword Dieser Parameter hat keinen Wert.
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --appendBirthdayToPassword Dieser Parameter hat keinen Wert.</code></pre>
 <p><strong>Klassennamen an das Passwort anhängen.:</strong><br>Ist dieser Schalter aktiv<br>bekommen neue Benutzer, oder wenn <strong>Passwort zurücksetzten:</strong> aktiv<br>ist, alle Benutzer den eigenen Klassennamen als Passwort gesetzt. Wird<br>im Feld <strong>Passwort</strong> auch etwas eingetragen, wird das vor den<br>Klassennamen gesetzt. Diese Parameter kann auch mit <strong>Geburtsdatum an</strong><br><strong>das Passwort anhängen.</strong> kombiniert<br>werden.</p>
-<pre><code class="language-plaintext">Kommandozeilenparameter: --appendClassToPassword Dieser Parameter hat keinen Wert.
-</code></pre>
+<pre><code class="language-plaintext">Kommandozeilenparameter: --appendClassToPassword Dieser Parameter hat keinen Wert.</code></pre>
 <h3>Format der Import CSV-Datei</h3>
 <p>In der ersten Zeile werden die Spalten und das Trennzeichen der Datei<br>definiert. Zur Zeit sind folgende Schlüsselwörter erlaubt, Pflichtfelder<br>sind als solche vermerkt:</p>
 <figure class="table">
@@ -257,7 +245,12 @@ group:&nbsp;&nbsp;compat&nbsp;winbind</code></pre>
 </ul>
 <p><strong>Ergebnis</strong> &lt;br&gt; Nach dem Abarbeiten der eingelesenen Datei wird die<br>neue, aktuelle Benutzerliste pro Klasse in der Datei<br><strong>/home/groups/SYSADMINS/userimports/&lt;datum&gt;.&lt;uhrzeit&gt;/userlist.&lt;KLASSE&gt;.txt</strong><br>im Gruppenverzeichnis der Systemadministratoren gespeichert. In dieser<br>Datei stehen die Passwörter im Klartext und muss dementsprechend mit<br>Vorsicht behandelt werden.</p>
 <p>Hier ist eine Beispieldatei für das erste Laden des Systems mit<br>unterschiedlichen Passwort-Vergaben:</p>
-<p><code>GEBURTSTAG:NACHNAME:VORNAME:PASSWORT:KLASSE&nbsp;</code><br><code>11.10.1986:Klein:Aladar:12345:9A&nbsp;</code><br><code>4.08.1986:Micuc:Emil::9A</code><br><code>09.11.1986:Groß:Evelyn:*:9A&nbsp;</code><br><code>17.04.1986:Müller:Helmuth:*:9A&nbsp;10A:&nbsp;</code><br><code>29.9.1987:Klein:Aladar:*:10A</code></p>
+<pre><code class="language-plaintext">GEBURTSTAG:NACHNAME:VORNAME:PASSWORT:KLASSE&nbsp;
+11.10.1986:Klein:Aladar:12345:9A&nbsp;
+4.08.1986:Micuc:Emil::9A
+09.11.1986:Groß:Evelyn:*:9A&nbsp;
+17.04.1986:Müller:Helmuth:*:9A&nbsp;10A:&nbsp;
+29.9.1987:Klein:Aladar:*:10A</code></pre>
 <p>Die resultierenden Dateien:</p>
 <ul>
   <li>/home/groups/SYSADMINS/userimports/&lt;datum&gt;.&lt;uhrzeit&gt;/userlist.9A.txt</li>
