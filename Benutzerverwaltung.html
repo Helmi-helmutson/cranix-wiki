@@ -1,0 +1,530 @@
+<!--
+title: Benutzerverwaltung
+description: 
+published: true
+date: 2026-06-01T16:25:10.401Z
+tags: benutzer, passwort, anlegen, löschen, bearbeiten, editieren,
+editor: ckeditor
+dateCreated: 2026-06-01T15:39:18.494Z
+-->
+
+<p>Während der Installation vom CRANIX werden mehrere Benutzer angelegt,<br>
+die für verschiedene Funktionen des Servers notwendig sind:</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th>Benutzername</th>
+<th>Rolle</th>
+<th>Berechtigung / Gruppenzugehörigkeit</th>
+<th>Funktion</th>
+<th>Bemerkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>root</td>
+<td>--</td>
+<td>darf alles machen</td>
+<td>Systemadministration von der Linuxkonsole</td>
+<td>Nur direkte Anmeldung am CRANIX oder Fernwartung per ssh.</td>
+</tr>
+<tr>
+<td>Administrator</td>
+<td>sysadmins</td>
+<td>Domain Administrator</td>
+<td>Verwaltung der Domäne, Webadministration</td>
+<td>Keine direkte Anmeldung am Server. Passwort nach der Installation identisch mit dem vom <strong>root</strong> . Ersetzt den Benutzer <strong>admin</strong> von OSS-3.4.2</td>
+</tr>
+<tr>
+<td>register</td>
+<td>internal</td>
+<td>Administrators</td>
+<td>Ausführung automatischer Domänenadministration ( z.B. Domainbeitritt nach dem Klonen )</td>
+<td>Erhält ein zufälliges Passwort während der Installation, welches in &lt;code&gt;/opt/cranix-java/conf/cranix-api.properties&lt;/code&gt; gespeichert wird. Setzt man die Systemvariable <strong>RESET_REGISTER_PASSWORD</strong> auf <strong>yes</strong>, wird sein Passwort jeden Tag neu generiert um die Sicherheit des Systems zu erhöhen. Standardeinstellung ist <strong>no</strong> .</td>
+</tr>
+<tr>
+<td>ossreader</td>
+<td>internal</td>
+<td>Domain User</td>
+<td>Ausführung automatischer Arbeiten, welche nur lesende Rechte benötigen.</td>
+<td>Passwort ist <strong>ossreader</strong> und darf nicht geändert werden.</td>
+</tr>
+<tr>
+<td>cephalix</td>
+<td>internal</td>
+<td>Domain Administrator</td>
+<td>Verwaltung des Servers vom CEPHALIX-Server aus.</td>
+<td>Der CEPHALIX-Server greift über diesen Benutzer auf den Server zu. Alle Objekte (Benutzer, Gruppen, Softwares ...), die vom <strong>cephalix</strong> erstellt werden, können nur vom dem CEPHALIX Server aus verwaltet werden. Auch der Benutzer <strong>Administrator</strong> hat keinen Zugriff auf diese Objekte.</td>
+</tr>
+<tr>
+<td>tteachers</td>
+<td>teachers</td>
+<td>Domain User, templates</td>
+<td>Templatebenutzer für die Lehrer.</td>
+<td>Beim Anlegen eines Lehrers wird sein Homeverzeichnis in das Homeverzeichnis des neuen Benutzers kopiert.</td>
+</tr>
+<tr>
+<td>tstudents</td>
+<td>students</td>
+<td>Domain User, templates</td>
+<td>Templatebenutzer für die Schüler.</td>
+<td>Beim Anlegen eines Schülers wird sein Homeverzeichnis in das Homeverzeichnis des neuen Benutzers kopiert.</td>
+</tr>
+<tr>
+<td>tadministration</td>
+<td>administration</td>
+<td>Domain User, templates</td>
+<td>Templatebenutzer für die Verwaltung.</td>
+<td>Beim Anlegen eines Benutzers für die Verwaltung wird sein Homeverzeichnis in das Homeverzeichnis des neuen Benutzers kopiert.</td>
+</tr>
+<tr>
+<td>tworkstations</td>
+<td>workstations</td>
+<td>Domain User, templates</td>
+<td>Templatebenutzer für die Arbeitsplatzbenutzer</td>
+<td>Bei der Registrierung eines Gerätes mit einer Gerätekonfiguration des Typs <strong>FatClient</strong> wird ein Workstation-Benutzer mit dem Namen und Passwort des Gerätes erstellt. Dieser Benutzer kann sich nur an diesem Gerät anmelden.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="systembenutzer-vs-samba-benutzer" class="toc-header"> Systembenutzer vs Samba-Benutzer</h2>
+<p>Normalerweise pflegt Linux die Systembenutzer UNIX-gemäß in den Dateien /etc/passwd und /etc/shadow. Nur der Benutzer <strong>root</strong> vom CRANIX-Server ist in diesen Dateien zu finden. Der CRANIX-Server ist ein AD-Samba-Server und die weiteren Benutzer werden in der SAMBA-LDAP-Datenbank gespeichert. Damit diese auf Linux-Ebene auch sichtbar sind: wird auf dem SAMBA-Server auch der <strong>winbind</strong> Dienst gestartet. Dieser sorgt dafür, dass die SAMBA-Benutzer und Gruppen-SIDs in UNIX <strong>uidNumber</strong> und <strong>gidNumber</strong> umgewandelt werden. Dies geschieht durch folgende Einstellungen in der Datei <strong>/etc/nsswitch.conf</strong>:</p>
+<p>passwd:&nbsp;compat&nbsp;winbind<br>
+group:&nbsp;&nbsp;compat&nbsp;winbind</p>
+<p>Zwar sind die Benutzer auf dem CRANIX-Server sichtbar und die Dateien können zugeordnet werden, jedoch ist zunächst eine Authentifizierung für Dienste über eine PAM-Schnittstelle (ssh, login, sftp, ftp, cyrus ...) nicht möglich. Wenn Sie zum Beispiel den SAMBA-Benutzern auch ssh Zugang zum CRANIX-Server gewähren möchten, muss dafür auch PAM konfiguriert werden:</p>
+<p><code>&nbsp;pam-config&nbsp;-a&nbsp;--winbind</code></p>
+<h2 id="benutzer-einzeln-anlegen" class="toc-header"> Benutzer einzeln anlegen</h2>
+<p>Wählen Sie im Hauptmenü <strong>Benutzer</strong>. Hier erhalten Sie eine Liste der aktuellen Benutzer. Klicken Sie rechts oben auf das Pluszeichen, um einen Benutzer anzulegen. &lt;br&gt; Folgende Felder müssen beim Anlegen eines neuen Benutzers unbedingt ausgefüllt bzw. gesetzt werden:</p>
+<ul>
+<li><strong>Benutzername:</strong> Wurde kein <strong>Benutzerkürzel</strong> (UID: User-ID) angegeben, wird dieser aus dem Nach- und Vornamen und ggf. Geburtsjahr<br>
+ermittelt. Dieser Vorgang wird durch die Systemvariable <em>LOGIN_SCHEME</em> unter <em>Server-&gt;Konfiguration-&gt;Einstellungen</em> gesteuert. Der Standardwert ist N4V4. Das bedeutet, dass der Benutzername aus den ersten vier Buchstaben des Nachnamens und den ersten vier Buchstaben des Vornamens gebildet wird. Existiert im System schon ein Benutzer mit derselben UID, wird eine Zahl an die UID angehängt, damit diese eindeutig ist. Um das Geburtsjahr als Identifikator zu verwenden, müssen Sie den Buchstaben „Y“ gefolgt von den Ziffern 2 oder 4 angeben. Andere Zahlen sind für das Geburtsjahr nicht erlaubt.</li>
+<li><strong>Kennung</strong> In diesem Feld kann ein externer Identifikator, zB.<br>
+Personalnummer verwendet werden.</li>
+<li><strong>Nachname</strong></li>
+<li><strong>Vorname</strong></li>
+<li><strong>Geburtstag</strong></li>
+<li><strong>Rolle:</strong> Wählen Sie eine primäre Gruppe (Rolle), der der neue Benutzer angehören soll. Weitere Gruppen können Sie später über das Menü Gruppen zuordnen. Sofern Sie noch keine Rollen angelegt haben, können Sie hier nur die Rollen Schüler, Lehrer, Verwaltung, Sysadmins oder Template Benutzer wählen.</li>
+<li><strong>Klasse:</strong>: Benutzer können zu einer beliebigen Anzahl von Klassen gehören. Ist der neu angelegte Benutzer ein Schüler, muss er jedoch mind. einer Klasse zugeordnet werden. Mit CTRL+A können Sie alle Klassen auswählen, um zB. einen Lehrer allen Klassen zuzuweisen.</li>
+<li><strong>Passwort:</strong> Darf leer bleiben. In diesem Fall wird ein sicheres Passwort generiert.</li>
+<li><strong>Mailsystem- und Festplattenquota:</strong> kann in MB angegeben werden. Gibt man keinen Wert an, werden die in den Systemvariablen FILE_QUOTA, FILE_TEACHER_QUOTA, MAIL_QUOTA und MAIL_TEACHER_QUOTA gesetzten Werte verwendet.</li>
+</ul>
+<p>&lt;gallery heights=250px widths=325px&gt; Cocpit-Benutzer-Liste.jpeg|Liste<br>
+der Benutzer Cocpit-Benuzter-Liste-MD.jpeg|Liste der Benutzer Mobiles<br>
+Gerät Benutzer-Anlegen.png|Benutzer anlegen &lt;/gallery&gt;</p>
+<blockquote class="is-info">
+<p>Sie können auch selber eine <strong>UID</strong> für den neuen Benutzer angeben. Bitte beachten Sie dabei, dass die UID aus Kleinbuchstaben bestehen muss, keine Sonderzeichen oder Leerstellen enthalten darf und im System eindeutig sein muss.</p>
+</blockquote>
+<p>Für jeden neuen Benutzer wird ein eigenes Homeverzeichnis angelegt. Die Lehrer bekommen ihre Verzeichnisse unterhalb des Verzeichnisses /home/teachers/ und die Schüler unterhalb des Verzeichnisses /home/students. „Verwaltungsnutzer“ bekommen ihre Verzeichnisse unterhalb des Verzeichnisses /home/administration.</p>
+<p>Es wird kein Windows-Profil-Verzeichnis für die neuen Benutzer angelegt. Diese werden bei der ersten Abmeldung an von einem Windows-Client erstellt. Die Windowsprofile liegen im /home/profiles/ und haben das Format &lt;uid&gt;.&lt;Windowsversion&gt;.</p>
+<h2 id="benutzer-importieren" class="toc-header"> Benutzer importieren</h2>
+<p>Da es sehr mühsam wäre, die Schüler bzw. die Lehrer jedes Jahr von Hand<br>
+einzutragen, bietet der CRANIX die Möglichkeit, die Liste<br>
+der Schüler (und Lehrer) aus einer Datei zu importieren.</p>
+<p>Die Datei sollte dazu folgende Voraussetzungen erfüllen:</p>
+<ul>
+<li>Muss UTF-8 kodiert sein.</li>
+<li>Die Trennzeichen zwischen den einzelnen Feldern können Doppelpunkt, Semikolon, oder Komma sein. Andere Zeichen wie zB. Leerzeichen und Tabulator sind nicht erlaubt. Wichtig ist natürlich: die Trennzeichen dürfen sich nicht im Verlauf der Datei ändern. So reicht die bei vielen Schulverwaltungsprogrammen existierende Export-Funktion in eine CSV oder Textdatei meist vollkommen aus.</li>
+<li>Eine Importdatei darf nur Benutzer der gleichen Rollen enthalten, man kann auf einmal nur Schüler oder nur Lehrer importieren.</li>
+</ul>
+<figure>
+<img src="Benutzer-Importieren.png" title="|rahmenlos|zentriert" width="400">
+<figcaption>|rahmenlos|zentriert</figcaption>
+</figure>
+<h3 id="importparameter" class="toc-header"> Importparameter</h3>
+<p>Beim Start des Imports kann, bzw. muss man verschiedene Parameter<br>
+angeben:</p>
+<ul>
+<li>
+<p><strong>Rolle:</strong> Die Rolle der zu importierenden Benutzer.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --role [administration,students,sysadmins,teachers,templates]
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Sprache:</strong> legt die Sprache fest, in der die Kopfzeile der Importdatei geschrieben ist.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --lang [DE,EN] 
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Identifizierungsmerkmal:</strong> legt fest wie die Benutzer identifiziert werden. Dafür gibt es 3 Möglichkeiten: Durch Nachname, Vorname und Geburtstag oder durch das Benutzerkürzel, womit man sich am CRANIX anmeldet oder durch einen externen Identifikator.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --identifier [sn-gn-bd,uid,uuid]
+</code></pre>
+</li>
+</ul>
+<blockquote class="is-warning">
+<p><em>WICHTIG</em> hat man <strong>Benutzerkürzel</strong> oder <strong>Kennung (uuid)</strong> gewählt, muss dieser auch in der Importdatei vorhanden sein</p>
+</blockquote>
+
+<ul>
+<li>
+<p><strong>Als Test ausführen:</strong><br>
+Es werden keine Änderungen durchgeführt, es<br>
+wird nur dargestellt, was bei einem Import gemacht werden würde.<br>
+Welche Benutzer werden neu angelegt, welche gelöscht, welchen Klassen<br>
+werden die Benutzer zugeordnet.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --test. Dieser Parameter hat keinen Wert.
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Passwort:</strong><br>
+Hier kann man ein Passwort für die Benutzer festlegen. Dieses wird in erster Linie nur für die neu angelegten Benutzer 	verwendet.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --password PASSWORD
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Passwort bei erster Anmeldung ändern:</strong><br>
+Benutzer werden bei ihrer<br>
+ersten Anmeldung an einem Windows-Gerät aufgefordert, ihr Passwort zu<br>
+ändern. Wurde <strong>Passwort zurücksetzen</strong> aktiviert, bezieht sich diese<br>
+Einstellung auch auf vorhandene<br>
+Benutzer.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --mustChange Dieser Parameter hat keinen Wert.
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Importdatei enthält alle Benutzer.:</strong><br>
+Dieser Parameter hat nur dann<br>
+einen Einfluss auf den Import, wenn Schüler importiert werden. Ist<br>
+dieser Parameter gesetzt, werden Schüler, die nicht in der Liste<br>
+enthalten sind, gelöscht.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --full Dieser Parameter hat keinen Wert.
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Importdatei enthält alle Klassen. Andere werden gelöscht.</strong><br>
+Dieser<br>
+Parameter hat nur dann einen Einfluss auf den Import, wenn Schüler<br>
+importiert werden. Wird dieser Parameter angegeben wird, werden die<br>
+Klassen, die in der Importdatei nicht vorkommen, aus dem System<br>
+gelöscht.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --allClasses Dieser Parameter hat keinen Wert.
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Klassenverzeichnisse leeren:</strong><br>
+Nach dem Import werden alle<br>
+Klassenverzeichnisse gelöscht und neu<br>
+angelegt.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --cleanClassDirs Dieser Parameter hat keinen Wert.
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Passwörter für alte Benutzer auch setzen.:</strong><br>
+Wird dieser Parameter<br>
+aktiviert, werden auch den vorhandenen Benutzern neue Passwörter<br>
+zugewiesen. Wurde im Feld <strong>Passwort</strong> eingegeben, wird dieses<br>
+verwendet, sonst bekommt jeder Benutzer ein zufällig generiertes<br>
+Passwort. Sie haben auch die Möglichkeit das Passwort in der<br>
+Importdatei festzulegen.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --resetPassword Dieser Parameter hat keinen Wert.
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Geburtsdatum an das Passwort anhängen.:</strong><br>
+Ist dieser Schalter aktiv<br>
+bekommen neue Benutzer, oder wenn <strong>Passwort zurücksetzten:</strong> aktiv<br>
+ist, alle Benutzer das eigene Geburtsdatum in Form JJJJ-MM-DD als<br>
+Passwort gesetzt. Wird im Feld <strong>Passwort</strong> auch etwas eingetragen,<br>
+wird das vor das Geburtsdatum gesetzt.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --appendBirthdayToPassword Dieser Parameter hat keinen Wert.
+</code></pre>
+</li>
+</ul>
+
+<ul>
+<li>
+<p><strong>Klassennamen an das Passwort anhängen.:</strong><br>
+Ist dieser Schalter aktiv<br>
+bekommen neue Benutzer, oder wenn <strong>Passwort zurücksetzten:</strong> aktiv<br>
+ist, alle Benutzer den eigenen Klassennamen als Passwort gesetzt. Wird<br>
+im Feld <strong>Passwort</strong> auch etwas eingetragen, wird das vor den<br>
+Klassennamen gesetzt. Diese Parameter kann auch mit <strong>Geburtsdatum an<br>
+das Passwort anhängen.</strong> kombiniert<br>
+werden.</p>
+<pre class="prismjs line-numbers" v-pre="true"><code class="language-">Kommandozeilenparameter: --appendClassToPassword Dieser Parameter hat keinen Wert.
+</code></pre>
+</li>
+</ul>
+<h3 id="format-der-import-csv-datei" class="toc-header"> Format der Import CSV-Datei</h3>
+<p>In der ersten Zeile werden die Spalten und das Trennzeichen der Datei<br>
+definiert. Zur Zeit sind folgende Schlüsselwörter erlaubt, Pflichtfelder<br>
+sind als solche vermerkt:</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th>Feldname</th>
+<th>Pflichtfeld/Bedeutung</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NACHNAME</td>
+<td>Pflichtfeld</td>
+<td>Keine Begrenzung. Lediglich das Trennzeichen darf nicht vorkommen.</td>
+</tr>
+<tr>
+<td>VORNAME</td>
+<td>Pflichtfeld</td>
+<td>Keine Begrenzung. Lediglich das Trennzeichen darf nicht vorkommen.</td>
+</tr>
+<tr>
+<td>GEBURTSTAG</td>
+<td>Haben Sie als <strong>Identifizierungsmerkmal</strong> "Name + Geburtstag" gewählt ist dies ein Pflichtfeld.</td>
+<td>Folgende Datumformate werden erkannt: JJJJ-MM-TT, TT-MM-JJJJ, JJJJ:MM:TT, TT:MM:JJJJ, <a href="http://JJJJ.MM.TT" class="is-external-link">JJJJ.MM.TT</a>, TT.MM.JJJJ, JJJJMMTT</td>
+</tr>
+<tr>
+<td>KLASSE</td>
+<td>Neue Klasse(n) des Benutzers. Aus den aktuellen Klassen wird der Benutzer entfernt.</td>
+<td>Wird der Benutzer mehreren Klassen zugeordnet, müssen diese durch Leerzeichen getrennt werden.</td>
+</tr>
+<tr>
+<td>PASSWORT</td>
+<td>Hier können Sie das Passwort eines jeden Benutzers optional, individuell bestimmen.</td>
+<td>Siehe &lt;a href="Benutzerverwaltung#Passwortsicherheit_.28Password_Policy.29"</td>
+</tr>
+<tr>
+<td>class="wikilink" title="Passwortsicherheit"&gt;Passwortsicherheit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>BENUTZERNAME</td>
+<td>Sie können individuelle User-IDs eingeben. Nutzen Sie diese Möglichkeit, wenn Ihnen die vom CRANIX automatisch generierten User-IDs (Anmeldenamen) nicht gefallen. Haben Sie als <strong>Identifizierungsmerkmal</strong> "Benutzername" gewählt ist dieser ein Pflichtfeld.</td>
+<td>Dar nur ASCII-Buchstaben, Ziffern, Punkt und Bindestriche enthalten. Darf jedoch nicht mit Punkt oder Bindestrich anfangen.</td>
+</tr>
+<tr>
+<td>KENNUNG</td>
+<td>In diesem Feld kann ein externer Identifikator, zB. Personalnummer verwendet werden. Haben Sie als <strong>Identifizierungsmerkmal</strong> "Kennung (UUID)" gewählt ist dies ein Pflichtfeld.</td>
+<td>Keine Begrenzung. Lediglich das Trennzeichen darf nicht vorkommen.</td>
+</tr>
+<tr>
+<td>GRUPPE</td>
+<td>Wird der Benutzer mehreren Gruppen zugeordnet, müssen diese durch Leerzeichen getrennt werden.</td>
+<td></td>
+</tr>
+<tr>
+<td>MAIL-QUOTA</td>
+<td>Mailsystemquota in MB</td>
+<td></td>
+</tr>
+<tr>
+<td>FESTPLATTENQUOTA</td>
+<td>Filesystemquota in MB</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>Die mit <em>Pflichtfeld</em> gekennzeichneten Felder sind obligatorisch.<br>
+Verwenden Sie als Namen für die Spalten die exakte Schreibweise wie oben<br>
+in den Tabellen. Andernfalls kann der CRANIX die Spalten nicht richtig<br>
+erkennen. Groß-/Kleinschreibung ist jedoch irrelevant.</p>
+<h4 id="abarbeiten-der-importdatei" class="toc-header"> Abarbeiten der Importdatei</h4>
+<p>Es bestehen drei Möglichkeiten, wie mit Benutzerdaten nach dem Einlesen<br>
+der Benutzerdatei weiter verfahren wird.</p>
+<p><strong>1. Neuer Benutzer</strong></p>
+<p>Wird ein Benutzer in der Datenbank nicht gefunden, handelt es sich um<br>
+einen neuen Benutzer. In diesem Fall wird für diesen Benutzer ein neuer<br>
+eindeutiger Login Name, wie unter <em>Neu Anlegen einzelner Benutzer</em><br>
+beschrieben, ermittelt und dieser in die Datenbank aufgenommen. Falls<br>
+vorhanden, wird das Feld PASSWORT wie folgt ausgewertet:</p>
+<ul>
+<li>‘text’ =&gt; ‘text’ wird als Passwort gesetzt.</li>
+<li>‘*’ =&gt; Sollten Sie in ein und derselben Textdatei einigen Nutzern<br>
+ein fest definiertes Passwort über ‘text’ zuweisen, für andere jedoch<br>
+ein zufälliges Passwort generieren lassen wollen, so fügen Sie bei<br>
+diesen Nutzern den ‘*’ ein.</li>
+<li>‘kein Inhalt’ =&gt; Sollten anderen Nutzern ein Passwort über die beiden<br>
+oben angegebenen Möglichkeiten (fest oder zufällig) zugewiesen worden<br>
+sein, bei einem (oder mehreren) Nutzern in derselben Datei, aber kein<br>
+Wert im Passwortfeld enthalten sein, so bekommen diese Nutzer kein<br>
+Passwort, d.h. sie können sich ohne Passwort am System anmelden.</li>
+</ul>
+<p>Ist das Feld PASSWORT in der Datei nicht vorhanden, wird ein zufälliges<br>
+Passwort zugewiesen.</p>
+<p><strong>2. Vorhandene Benutzer ändern</strong></p>
+<p>Steht ein Benutzer sowohl in der Datenbank als auch in der<br>
+Benutzerliste, handelt es sich um einen alten Benutzer.</p>
+<p>Bei vorhandenen Benutzern wird das Feld PASSWORT nicht ausgewertet. Die<br>
+Benutzer werden lediglich aus der alten Klasse aus- und in die neue<br>
+Klasse eingetragen.</p>
+<p><strong>3. Benutzer löschen</strong></p>
+<p><em>Hinweis</em>: Diese Funktion funktioniert nur, wenn sie eine vollständige<br>
+Liste der Schüler einlesen.</p>
+<ul>
+<li>Steht ein Benutzer in der Datenbank, jedoch nicht in der<br>
+Benutzerliste, bedeutet das, dass dieser Benutzer die Schule verlassen<br>
+hat.</li>
+<li>Also werden seine Daten aus der Datenbank gelöscht, sein<br>
+Heimatverzeichnis wird in ein Archiv zusammengefasst und unter<br>
+<strong>/home/archiv/&lt;benutzername&gt;-&lt;datum&gt;.tgz</strong> gespeichert.</li>
+</ul>
+<p><strong>Ergebnis</strong> &lt;br&gt; Nach dem Abarbeiten der eingelesenen Datei wird die<br>
+neue, aktuelle Benutzerliste pro Klasse in der Datei<br>
+<strong>/home/groups/SYSADMINS/userimports/&lt;datum&gt;.&lt;uhrzeit&gt;/userlist.&lt;KLASSE&gt;.txt</strong><br>
+im Gruppenverzeichnis der Systemadministratoren gespeichert. In dieser<br>
+Datei stehen die Passwörter im Klartext und muss dementsprechend mit<br>
+Vorsicht behandelt werden.</p>
+<p>Hier ist eine Beispieldatei für das erste Laden des Systems mit<br>
+unterschiedlichen Passwort-Vergaben:</p>
+<p><code>GEBURTSTAG:NACHNAME:VORNAME:PASSWORT:KLASSE&nbsp;</code><br>
+<code>11.10.1986:Klein:Aladar:12345:9A&nbsp;</code><br>
+<code>4.08.1986:Micuc:Emil::9A</code><br>
+<code>09.11.1986:Groß:Evelyn:*:9A&nbsp;</code><br>
+<code>17.04.1986:Müller:Helmuth:*:9A&nbsp;10A:&nbsp;</code><br>
+<code>29.9.1987:Klein:Aladar:*:10A</code></p>
+<p>Die resultierenden Dateien:</p>
+<ul>
+<li>/home/groups/SYSADMINS/userimports/&lt;datum&gt;.&lt;uhrzeit&gt;/userlist.9A.txt</li>
+<li>/home/groups/SYSADMINS/userimports/&lt;datum&gt;.&lt;uhrzeit&gt;/userlist.10A.txt</li>
+</ul>
+<h2 id="passwortsicherheit" class="toc-header"> Passwortsicherheit</h2>
+<p>Die Sicherheit der Passwörter wird im CRANIX auf zwei Ebenen<br>
+sichergestellt. Zunächst wird jedes Passwort beim Anlegen von Benutzern<br>
+bzw. beim Ändern der Passwörter durch Benutzter auf bestimmte<br>
+Sicherheitsmerkmale kontrolliert. Weiterhin kann man festlegen wie lange<br>
+ein Passwort gültig ist, also nach wie vielen Tagen Benutzer ihre<br>
+Passwörter ändern müssen bzw. wie mit fehlerhaften Anmeldeversuchen<br>
+umgegangen werden soll.</p>
+<h3 id="überprüfung-von-passwörtern" class="toc-header"> Überprüfung von Passwörtern</h3>
+<p>Beim Anlegen neuer Benutzer bzw. beim Ändern der Passwörter von<br>
+vorhandenen Benutzern wird die Qualität des Passwortes überprüft. Um die<br>
+Komplexität der Passwörter besser kontrollieren bzw. beschreiben zu<br>
+können, liefert der CRANIX ein eigenes Script für diesen Zweck:<br>
+<strong>/usr/share/cranix/tools/check_password_complexity.sh</strong> Dieses prüft ob<br>
+das Passwort folgende Voraussetzungen erfüllt:</p>
+<p>Technische Voraussetzungen:</p>
+<ul>
+<li>Minimale Passwortlänge ist eingehalten. Die minimale Passwortlänge<br>
+wird durch die globale Variable MINIMAL_PASSWORD_LENGTH festgelegt.</li>
+<li>Maximale Passwortlänge ist eingehalten. Die maximale Passwortlänge<br>
+wird durch die globale Variable MAXIMAL_PASSWORD_LENGTH festgelegt.</li>
+<li>Das Passwort darf kein '&amp;' und '§'-Zeichen enthalten. Das kommt aus<br>
+einer Restriktion von Office365 von Microsoft.</li>
+<li>Das Passwort darf nicht mit Bindestrich '-' beginnen.</li>
+</ul>
+<p>Sicherheitsrelevante Voraussetzungen:</p>
+<ul>
+<li>Das Passwort muss mindestens einen Großbuchstaben enthalten.</li>
+<li>Das Passwort muss mindestens einen Kleinbuchstaben enthalten.</li>
+<li>Das Passwort muss mindestens eine Ziffer enthalten.</li>
+<li>Das Passwort muss die Prüfung durch cracklib-check bestehen.</li>
+</ul>
+<p>Dieses Programm liest das Passwort aus dem STDIN. Dieses Script wurde in<br>
+<strong>/etc/samba/smb.conf</strong> als <em>check password script</em> für Samba auch als<br>
+Überprüfungsskript gesetzt. Wer eine eigene Passwortüberprüfung<br>
+erstellen möchte kann ein Script namens<br>
+<strong>/usr/share/cranix/tools/custom_check_password_complexity.sh</strong><br>
+erstellen. Dieses Script muss folgende Bedingungen erfüllen:</p>
+<ul>
+<li>muss ausführbar sein.</li>
+<li>muss das zu evaluierende Passwort aus der Standardeingabe lesen.</li>
+<li>muss beim Erfolg mit einem Exitwert von 0 sonst ein Wert größer als 0<br>
+aufhören.</li>
+<li>muss beim fehlerhaften Passwort den Grund auf die Standardausgabe<br>
+liefern.</li>
+</ul>
+<p>Bitte beachten Sie, dass dieses Script nur die Sicherheitsrelevante<br>
+Überprüfung ersetzt. Die technische Überprüfung bleibt nach wie vor<br>
+erhalten.</p>
+<p>&lt;div class="warningbox"&gt;Mit der globalen Variable<br>
+CHECK_PASSWORD_QUALITY kann man die Überprüfung der<br>
+sicherheitsrelevanten Voraussetzungen ausschalten. Die technische<br>
+Voraussetzungen müssen jedoch immer erfüllt werden. Das gilt auch, wenn<br>
+Lehrer die Passwörter von Schüler zurücksetzen. Zwar wird in diesem Fall<br>
+automatisch CHECK_PASSWORD_QUALITY auf no gesetzt, die technische<br>
+Voraussetzungen müssen trotzdem erfüllt werden.&lt;/div&gt;</p>
+<h3 id="samba-passwortrichtlinien-password-policies" class="toc-header"> SAMBA Passwortrichtlinien (Password Policies)</h3>
+<p>Sie können die folgenden Passworteinstellungen mit CRANIX-4<br>
+konfigurieren:</p>
+<ul>
+<li>Wird die Komplexität des Passworts überprüft?</li>
+<li>Minimale Passwortlänge. Dies kann über die globale Variable MINIMAL_PASSWORD_LENGTH gesetzt werden.</li>
+<li>Maximale Passwortlänge. Das ist keine Standard Samba/Windows Passworteinstellung. In der Praxis hat es sich jedoch als sinnvoll erwiesen, die Länge  	der Passwörter zu begrenzen. Dies kann über die globale Variable MAXIMAL_PASSWORD_LENGTH eingestellt werden.</li>
+<li>Mindestalter des Passworts</li>
+<li>Maximales Passwortalter</li>
+<li>Die Anzahl ungültiger Anmeldeversuche, die vor dem Sperren des Kontos zulässig sind.</li>
+<li>Die Zeitspanne, in der ein Konto gesperrt wird, nachdem das Limit für fehlerhafte Anmeldeversuche überschritten wurde.</li>
+</ul>
+<p>Grundsätzlich können diese Werte von der Kommandozeile mit samba-tool Befehl abgefragt bzw. gesetzt werden:</p>
+<p><strong>Abfrage der aktuellen Werte:</strong></p>
+<p><code>samba-tool&nbsp;domain&nbsp;passwordsettings&nbsp;show</code><br>
+<code>Password&nbsp;complexity:&nbsp;on</code><br>
+<code>Store&nbsp;plaintext&nbsp;passwords:&nbsp;off</code><br>
+<code>Password&nbsp;history&nbsp;length:&nbsp;24</code><br>
+<code>Minimum&nbsp;password&nbsp;length:&nbsp;7</code><br>
+<code>Minimum&nbsp;password&nbsp;age&nbsp;(days):&nbsp;1</code><br>
+<code>Maximum&nbsp;password&nbsp;age&nbsp;(days):&nbsp;365</code><br>
+<code>Account&nbsp;lockout&nbsp;duration&nbsp;(mins):&nbsp;30</code><br>
+<code>Account&nbsp;lockout&nbsp;threshold&nbsp;(attempts):&nbsp;0</code><br>
+<code>Reset&nbsp;account&nbsp;lockout&nbsp;after&nbsp;(mins):&nbsp;30</code></p>
+<blockquote class="is-info">
+<p>WICHTIG&nbsp;das&nbsp;sind&nbsp;die&nbsp;Standardwerten`</p>
+</blockquote>
+<p><strong>Auflisten der Befehlsoptionen</strong></p>
+<p><code>samba-tool&nbsp;domain&nbsp;passwordsettings&nbsp;set&nbsp;-h</code></p>
+<p>Bei der Installation wird für die Passwörter ein Jahr als Gültigkeit<br>
+gesetzt. Mit folgendem Befehl werden alle Benutzer dazu gezwungen, die<br>
+Passwörter halbjährlich zu ändern:</p>
+<p><code>samba-tool&nbsp;domain&nbsp;passwordsettings&nbsp;set&nbsp;--max-pwd-age=182</code></p>
+<p>Mit dem Wert <strong>0</strong> für <strong>--max-pwd-age</strong> erreicht man, dass die<br>
+Passwörter nie ihre Gültigkeit verlieren. Möchte man, dass einzelne<br>
+Benutzer ihre Passwörter nie ändern müssen, muss man folgenden Befehl<br>
+verwenden:</p>
+<p><code>samba-tool&nbsp;user&nbsp;&nbsp;setexpiry&nbsp;--noexpiry&nbsp;&lt;uid&gt;</code></p>
+<h2 id="benutzer-über-cranix-api-verwalten" class="toc-header"> Benutzer über cranix-api verwalten</h2>
+<p>Man kann von der Kommandozeile über die cranix-api die Benutzer auch verwalten.</p>
+<h3 id="benutzer-auflisten" class="toc-header"> Benutzer auflisten</h3>
+<p><code>crx_api.sh&nbsp;GET&nbsp;users/all&nbsp;listet&nbsp;alle&nbsp;Benutzer&nbsp;in&nbsp;JSON&nbsp;List&nbsp;auf.</code><br>
+<code>crx_api.sh&nbsp;GET&nbsp;users/byRole/{role}&nbsp;listet&nbsp;alle&nbsp;Benutzer&nbsp;einer&nbsp;Rolle&nbsp;in&nbsp;JSON&nbsp;List&nbsp;auf.</code><br>
+<code>crx_api_text.sh&nbsp;GET&nbsp;users/byUid/{uid}/{parameter}&nbsp;Mit&nbsp;diesem&nbsp;Call&nbsp;kann&nbsp;man&nbsp;die&nbsp;Parameter&nbsp;eines&nbsp;Benutzers&nbsp;abfragen.</code><br>
+<code>crx_api_text.sh&nbsp;GET&nbsp;text/{userName}/classes&nbsp;Listet&nbsp;alle&nbsp;Klassen&nbsp;auf&nbsp;in&nbsp;der&nbsp;der&nbsp;Benutzer&nbsp;Mitglied&nbsp;ist</code><br>
+<code>crx_api_text.sh&nbsp;GET&nbsp;text/{userName}/grousp&nbsp;Listet&nbsp;alle&nbsp;Gruppen&nbsp;auf&nbsp;in&nbsp;der&nbsp;der&nbsp;Benutzer&nbsp;Mitglied&nbsp;ist</code></p>
+<h3 id="benutzer-erstellen" class="toc-header"> Benutzer erstellen</h3>
+<p>Zuerst muss man eine Datei mit einem JSON-Hash der Benutzerdaten erstellen. Diese muss mindestens die obligatorische Felder erhalten:</p>
+<blockquote class="is-info">
+<p><code>{</code><br>
+<code>&nbsp;&nbsp;&nbsp;"sn"&nbsp;:&nbsp;"Mouse",</code><br>
+<code>&nbsp;&nbsp;&nbsp;"givenName"&nbsp;:&nbsp;"Micky",</code><br>
+<code>&nbsp;&nbsp;&nbsp;"birthDay"&nbsp;:&nbsp;"2007.04-17",</code><br>
+<code>&nbsp;&nbsp;&nbsp;"role"&nbsp;:&nbsp;"students"</code><br>
+<code>}</code></p>
+</blockquote>
+<p>Dieser muss in einer Datei gespeichert werden und kann nun mit folgendem Call den Benutzer erstellen:</p>
+<blockquote class="is-info">
+<p><code>&nbsp;crx_api_post_file.sh&nbsp;users/add&nbsp;&lt;Pfad&nbsp;zur&nbsp;JSON-Hash-File&gt;</code></p>
+</blockquote>
+<h3 id="benutzer-löschen" class="toc-header"> Benutzer löschen</h3>
+<p>Man kann einen Benutzer anhand seiner uid oder Datenbank-ID löschen:</p>
+<p><code>crx_api.sh&nbsp;DELETE&nbsp;users/text/{uid}</code><br>
+<code>crx_api.sh&nbsp;DELETE&nbsp;users/{Datenbank&nbsp;Id}</code></p>
+<h3 id="gruppenmitgliedschaft-von-benutzer-ändern" class="toc-header"> Gruppenmitgliedschaft von Benutzer ändern</h3>
+<p><code>crx_api_text.sh&nbsp;PUT&nbsp;users/text/{userName}/groups/{groupName}</code><br>
+<code>crx_api_text.sh&nbsp;DELETE&nbsp;users/text/{userName}/groups/{groupName}</code><br>
+<code>crx_api_text.sh&nbsp;PUT&nbsp;users/text/{userName}/allClassess</code><br>
+<code>crx_api.sh&nbsp;PUT&nbsp;users/allTeachersInAllClasses</code></p>
