@@ -2,7 +2,7 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T16:30:02.762Z
+date: 2026-06-01T16:33:07.313Z
 tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: ckeditor
 dateCreated: 2026-06-01T15:39:18.494Z
@@ -228,18 +228,20 @@ group:&nbsp;&nbsp;compat&nbsp;winbind</code></pre>
 <h4>Abarbeiten der Importdatei</h4>
 <p>Es bestehen drei Möglichkeiten, wie mit Benutzerdaten nach dem Einlesen<br>der Benutzerdatei weiter verfahren wird.</p>
 <p><strong>1. Neuer Benutzer</strong></p>
-<p>Wird ein Benutzer in der Datenbank nicht gefunden, handelt es sich um<br>einen neuen Benutzer. In diesem Fall wird für diesen Benutzer ein neuer<br>eindeutiger Login Name, wie unter <i>Neu Anlegen einzelner Benutzer</i><br>beschrieben, ermittelt und dieser in die Datenbank aufgenommen. Falls<br>vorhanden, wird das Feld PASSWORT wie folgt ausgewertet:</p>
+<p>Wird ein Benutzer in der Datenbank nicht gefunden, handelt es sich um einen neuen Benutzer. In diesem Fall wird für diesen Benutzer ein neuer eindeutiger Login Name, wie unter <i>Neu Anlegen einzelner Benutzer </i>beschrieben, ermittelt und dieser in die Datenbank aufgenommen. Falls vorhanden, wird das Feld PASSWORT wie folgt ausgewertet:</p>
 <ul>
   <li>‘text’ =&gt; ‘text’ wird als Passwort gesetzt.</li>
-  <li>‘*’ =&gt; Sollten Sie in ein und derselben Textdatei einigen Nutzern<br>ein fest definiertes Passwort über ‘text’ zuweisen, für andere jedoch<br>ein zufälliges Passwort generieren lassen wollen, so fügen Sie bei<br>diesen Nutzern den ‘*’ ein.</li>
-  <li>‘kein Inhalt’ =&gt; Sollten anderen Nutzern ein Passwort über die beiden<br>oben angegebenen Möglichkeiten (fest oder zufällig) zugewiesen worden<br>sein, bei einem (oder mehreren) Nutzern in derselben Datei, aber kein<br>Wert im Passwortfeld enthalten sein, so bekommen diese Nutzer kein<br>Passwort, d.h. sie können sich ohne Passwort am System anmelden.</li>
+  <li>‘*’ =&gt; Sollten Sie in ein und derselben Textdatei einigen Nutzern ein fest definiertes Passwort über ‘text’ zuweisen, für andere jedoch ein zufälliges Passwort generieren lassen wollen, so fügen Sie bei diesen Nutzern den ‘*’ ein.</li>
+  <li>‘kein Inhalt’ =&gt; Sollten anderen Nutzern ein Passwort über die beiden oben angegebenen Möglichkeiten (fest oder zufällig) zugewiesen worden sein, bei einem (oder mehreren) Nutzern in derselben Datei, aber kein Wert im Passwortfeld enthalten sein, so bekommen diese Nutzer kein Passwort, d.h. sie können sich ohne Passwort am System anmelden.</li>
 </ul>
-<p>Ist das Feld PASSWORT in der Datei nicht vorhanden, wird ein zufälliges<br>Passwort zugewiesen.</p>
+<p>Ist das Feld PASSWORT in der Datei nicht vorhanden, wird ein zufälliges Passwort zugewiesen.</p>
 <p><strong>2. Vorhandene Benutzer ändern</strong></p>
-<p>Steht ein Benutzer sowohl in der Datenbank als auch in der<br>Benutzerliste, handelt es sich um einen alten Benutzer.</p>
-<p>Bei vorhandenen Benutzern wird das Feld PASSWORT nicht ausgewertet. Die<br>Benutzer werden lediglich aus der alten Klasse aus- und in die neue<br>Klasse eingetragen.</p>
+<p>Steht ein Benutzer sowohl in der Datenbank als auch in der Benutzerliste, handelt es sich um einen alten Benutzer.</p>
+<p>Bei vorhandenen Benutzern wird das Feld PASSWORT nicht ausgewertet. Die Benutzer werden lediglich aus der alten Klasse aus- und in die neue Klasse eingetragen.</p>
 <p><strong>3. Benutzer löschen</strong></p>
-<p><i>Hinweis</i>: Diese Funktion funktioniert nur, wenn sie eine vollständige<br>Liste der Schüler einlesen.</p>
+<blockquote>
+  <p><i>Hinweis</i>: Diese Funktion funktioniert nur, wenn sie eine vollständige Liste der Schüler einlesen.</p>
+</blockquote>
 <ul>
   <li>Steht ein Benutzer in der Datenbank, jedoch nicht in der<br>Benutzerliste, bedeutet das, dass dieser Benutzer die Schule verlassen<br>hat.</li>
   <li>Also werden seine Daten aus der Datenbank gelöscht, sein<br>Heimatverzeichnis wird in ein Archiv zusammengefasst und unter<br><strong>/home/archiv/&lt;benutzername&gt;-&lt;datum&gt;.tgz</strong> gespeichert.</li>
