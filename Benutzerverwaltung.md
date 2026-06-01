@@ -2,7 +2,7 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T16:50:21.221Z
+date: 2026-06-01T17:08:03.217Z
 tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: markdown
 dateCreated: 2026-06-01T15:39:18.494Z
@@ -261,12 +261,9 @@ Beim Anlegen neuer Benutzer bzw. beim Ändern der Passwörter von vorhandenen Be
 
 Technische Voraussetzungen:
 
--   Minimale Passwortlänge ist eingehalten. Die minimale Passwortlänge  
-    wird durch die globale Variable MINIMAL\_PASSWORD\_LENGTH festgelegt.
--   Maximale Passwortlänge ist eingehalten. Die maximale Passwortlänge  
-    wird durch die globale Variable MAXIMAL\_PASSWORD\_LENGTH festgelegt.
--   Das Passwort darf kein '&' und '§'-Zeichen enthalten. Das kommt aus  
-    einer Restriktion von Office365 von Microsoft.
+-   Minimale Passwortlänge ist eingehalten. Die minimale Passwortlänge wird durch die globale Variable MINIMAL\_PASSWORD\_LENGTH festgelegt.
+-   Maximale Passwortlänge ist eingehalten. Die maximale Passwortlänge wird durch die globale Variable MAXIMAL\_PASSWORD\_LENGTH festgelegt.
+-   Das Passwort darf kein '&' und '§'-Zeichen enthalten. Das kommt aus einer Restriktion von Office365 von Microsoft.
 -   Das Passwort darf nicht mit Bindestrich '-' beginnen.
 
 Sicherheitsrelevante Voraussetzungen:
@@ -276,31 +273,18 @@ Sicherheitsrelevante Voraussetzungen:
 -   Das Passwort muss mindestens eine Ziffer enthalten.
 -   Das Passwort muss die Prüfung durch cracklib-check bestehen.
 
-Dieses Programm liest das Passwort aus dem STDIN. Dieses Script wurde in  
-**/etc/samba/smb.conf** als *check password script* für Samba auch als  
-Überprüfungsskript gesetzt. Wer eine eigene Passwortüberprüfung  
-erstellen möchte kann ein Script namens  
-**/usr/share/cranix/tools/custom\_check\_password\_complexity.sh**  
-erstellen. Dieses Script muss folgende Bedingungen erfüllen:
+Dieses Programm liest das Passwort aus dem STDIN. Dieses Script wurde in  **/etc/samba/smb.conf** als *check password script* für Samba auch als  Überprüfungsskript gesetzt. Wer eine eigene Passwortüberprüfung erstellen möchte kann ein Script namens  **/usr/share/cranix/tools/custom\_check\_password\_complexity.sh**  erstellen. Dieses Script muss folgende Bedingungen erfüllen:
 
 -   muss ausführbar sein.
 -   muss das zu evaluierende Passwort aus der Standardeingabe lesen.
--   muss beim Erfolg mit einem Exitwert von 0 sonst ein Wert größer als 0  
-    aufhören.
--   muss beim fehlerhaften Passwort den Grund auf die Standardausgabe  
-    liefern.
+-   muss beim Erfolg mit einem Exitwert von 0 sonst ein Wert größer als 0  aufhören.
+-   muss beim fehlerhaften Passwort den Grund auf die Standardausgabe  liefern.
 
-Bitte beachten Sie, dass dieses Script nur die Sicherheitsrelevante  
-Überprüfung ersetzt. Die technische Überprüfung bleibt nach wie vor  
-erhalten.
+Bitte beachten Sie, dass dieses Script nur die Sicherheitsrelevante Überprüfung ersetzt. Die technische Überprüfung bleibt nach wie vor erhalten.
 
-<div class="warningbox">Mit der globalen Variable  
-CHECK\_PASSWORD\_QUALITY kann man die Überprüfung der  
-sicherheitsrelevanten Voraussetzungen ausschalten. Die technische  
-Voraussetzungen müssen jedoch immer erfüllt werden. Das gilt auch, wenn  
-Lehrer die Passwörter von Schüler zurücksetzen. Zwar wird in diesem Fall  
-automatisch CHECK\_PASSWORD\_QUALITY auf no gesetzt, die technische  
-Voraussetzungen müssen trotzdem erfüllt werden.</div>
+> Mit der globalen Variable `CHECK_PASSWORD_QUALITY` kann man die Überprüfung der sicherheitsrelevanten Voraussetzungen ausschalten. Die technische Voraussetzungen müssen jedoch immer erfüllt werden. Das gilt auch, wenn Lehrer die Passwörter von Schüler zurücksetzen. Zwar wird in diesem Fall automatisch `CHECK_PASSWORD_QUALITY` auf no gesetzt, die technische Voraussetzungen müssen trotzdem erfüllt werden.
+{.is-warning}
+
 
 ### SAMBA Passwortrichtlinien (Password Policies)
 
@@ -308,8 +292,8 @@ Sie können die folgenden Passworteinstellungen mit CRANIX-4
 konfigurieren:
 
 -   Wird die Komplexität des Passworts überprüft?
--   Minimale Passwortlänge. Dies kann über die globale Variable MINIMAL\_PASSWORD\_LENGTH gesetzt werden.
--   Maximale Passwortlänge. Das ist keine Standard Samba/Windows Passworteinstellung. In der Praxis hat es sich jedoch als sinnvoll erwiesen, die Länge der Passwörter zu begrenzen. Dies kann über die globale Variable MAXIMAL\_PASSWORD\_LENGTH eingestellt werden.
+-   Minimale Passwortlänge. Dies kann über die globale Variable `MINIMAL_PASSWORD_LENGTH` gesetzt werden.
+-   Maximale Passwortlänge. Das ist keine Standard Samba/Windows Passworteinstellung. In der Praxis hat es sich jedoch als sinnvoll erwiesen, die Länge der Passwörter zu begrenzen. Dies kann über die globale Variable `MAXIMAL_PASSWORD_LENGTH` eingestellt werden.
 -   Mindestalter des Passworts
 -   Maximales Passwortalter
 -   Die Anzahl ungültiger Anmeldeversuche, die vor dem Sperren des Kontos zulässig sind.
@@ -330,22 +314,17 @@ Grundsätzlich können diese Werte von der Kommandozeile mit samba-tool Befehl a
 `Account lockout threshold (attempts): 0`  
 `Reset account lockout after (mins): 30`
 
-> WICHTIG das sind die Standardwerten\`
+> WICHTIG das sind die Standardwerte`
 
 **Auflisten der Befehlsoptionen**
 
 `samba-tool domain passwordsettings set -h`
 
-Bei der Installation wird für die Passwörter ein Jahr als Gültigkeit  
-gesetzt. Mit folgendem Befehl werden alle Benutzer dazu gezwungen, die  
-Passwörter halbjährlich zu ändern:
+Bei der Installation wird für die Passwörter ein Jahr als Gültigkeit  gesetzt. Mit folgendem Befehl werden alle Benutzer dazu gezwungen, die  Passwörter halbjährlich zu ändern:
 
 `samba-tool domain passwordsettings set --max-pwd-age=182`
 
-Mit dem Wert **0** für **\--max-pwd-age** erreicht man, dass die  
-Passwörter nie ihre Gültigkeit verlieren. Möchte man, dass einzelne  
-Benutzer ihre Passwörter nie ändern müssen, muss man folgenden Befehl  
-verwenden:
+Mit dem Wert **0** für **\--max-pwd-age** erreicht man, dass die Passwörter nie ihre Gültigkeit verlieren. Möchte man, dass einzelne Benutzer ihre Passwörter nie ändern müssen, muss man folgenden Befehl verwenden:
 
 `samba-tool user  setexpiry --noexpiry <uid>`
 
@@ -355,11 +334,13 @@ Man kann von der Kommandozeile über die cranix-api die Benutzer auch verwalten.
 
 ### Benutzer auflisten
 
-`crx_api.sh GET users/all listet alle Benutzer in JSON List auf.`  
-`crx_api.sh GET users/byRole/{role} listet alle Benutzer einer Rolle in JSON List auf.`  
-`crx_api_text.sh GET users/byUid/{uid}/{parameter} Mit diesem Call kann man die Parameter eines Benutzers abfragen.`  
-`crx_api_text.sh GET text/{userName}/classes Listet alle Klassen auf in der der Benutzer Mitglied ist`  
-`crx_api_text.sh GET text/{userName}/grousp Listet alle Gruppen auf in der der Benutzer Mitglied ist`
+```plaintext 
+  crx_api.sh GET users/all listet alle Benutzer in JSON List auf. 
+crx_api.sh GET users/byRole/{role} listet alle Benutzer einer Rolle in JSON List auf. 
+crx_api_text.sh GET users/byUid/{uid}/{parameter} Mit diesem Call kann man die Parameter eines Benutzers abfragen. 
+crx_api_text.sh GET text/{userName}/classes Listet alle Klassen auf in der der Benutzer Mitglied ist
+crx_api_text.sh GET text/{userName}/grousp Listet alle Gruppen auf in der der Benutzer Mitglied ist
+  ```
 
 ### Benutzer erstellen
 
@@ -374,18 +355,23 @@ Zuerst muss man eine Datei mit einem JSON-Hash der Benutzerdaten erstellen. Dies
 
 Dieser muss in einer Datei gespeichert werden und kann nun mit folgendem Call den Benutzer erstellen:
 
-> ` crx_api_post_file.sh users/add <Pfad zur JSON-Hash-File>`
+```plaintext
+  crx_api_post_file.sh users/add <Pfad zur JSON-Hash-File>
+  ```
 
 ### Benutzer löschen
 
 Man kann einen Benutzer anhand seiner uid oder Datenbank-ID löschen:
 
-`crx_api.sh DELETE users/text/{uid}`  
-`crx_api.sh DELETE users/{Datenbank Id}`
+```plaintext crx_api.sh DELETE users/text/{uid}
+	crx_api.sh DELETE users/{Datenbank Id}
+  ```
 
 ### Gruppenmitgliedschaft von Benutzer ändern
 
-`crx_api_text.sh PUT users/text/{userName}/groups/{groupName}`  
-`crx_api_text.sh DELETE users/text/{userName}/groups/{groupName}`  
-`crx_api_text.sh PUT users/text/{userName}/allClassess`  
-`crx_api.sh PUT users/allTeachersInAllClasses`
+```plaintext 
+  crx_api_text.sh PUT users/text/{userName}/groups/{groupName}  
+crx_api_text.sh DELETE users/text/{userName}/groups/{groupName}
+crx_api_text.sh PUT users/text/{userName}/allClassess
+crx_api.sh PUT users/allTeachersInAllClasses
+  ```
