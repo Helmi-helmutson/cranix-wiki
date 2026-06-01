@@ -1,0 +1,34 @@
+<!--
+title: Installation
+description: 
+published: true
+date: 2026-05-27T14:45:18.638Z
+tags: installation install setup einrichtung cranix crx cephalix
+editor: ckeditor
+dateCreated: 2026-04-27T10:32:50.749Z
+-->
+
+<h2>Installationsmedium erstellen</h2>
+<p>Je nach dem in welcher Umgebung der CRANIX Server installiert wird, muss man das Installationsmedium von verschiedenen Orten herunterladen. Das aktuelle Basis-Image befindet sich unter <a href="http://downloads.cephalix.eu/CRANIX.iso">CRANIX.iso</a>.&nbsp;</p>
+<p>Wenn Sie einen CRANIX-Care Vertrag mit uns haben oder Sie uns mit der Fertigstellung eines angepassten Image für Ihre Umgebung beauftragt haben: senden wir Ihnen eine individuelle URL für den Download.</p>
+<p>Haben Sie einen eigenen CEPHALIX-Server für die Verwaltung Ihrer CRANIX-Server, dann können Sie das Installationsmedium von Ihrem CEPHALIX-Server herunterladen. Mehr dazu finden Sie in der Dokumentation des CEPHALIX-Servers.</p>
+<p>Brennen Sie die .ISO-Datei auf einen DVD-Rohling oder kopieren Sie es auf ein USB-Stick. Unter SUSE-Linux geht das am einfach mit dem <strong>dd</strong> Befehl:</p>
+<ul>
+  <li>Melden Sie sich als Benutzer <strong>root</strong> an.</li>
+  <li>USB-Stick anstecken</li>
+  <li>Device für USB-Stick ermitteln:</li>
+</ul>
+<pre><code class="language-plaintext">grep -Ff &lt;(hwinfo --disk --short) &lt;(hwinfo --usb --short)</code></pre>
+<p>&nbsp;</p>
+<ul>
+  <li>Image kopieren. /dev/sdX müssen Sie mit dem ermittelten Device ersetzen.</li>
+</ul>
+<pre><code class="language-plaintext">dd if="CRANIX.iso" of=/dev/sdX bs=4M status=progress &amp;&amp; sync</code></pre>
+<h2>Das Bootmenü</h2>
+<p>Bei einer Installation von einem USB-Stick muss das Installationsmedium nach dem Reboot, der nach der Installation der Pakete folgt, entfernt werden. Ansonsten wird die Installation nach dem Reboot nicht als Installationsmedium erkannt und die erforderlichen Paketen werden während der Konfiguration nicht nach installiert.</p>
+<figure class="image image-style-align-right"><img src="/installation-bootmenue.png"></figure>
+<p>Bei einer Standardinstallation müssen Sie das zweite Menüpunkt <strong>Installation</strong> wählen.</p>
+<p>Erhielten Sie das Installationsmedium von uns oder von einem CEPHALIX-Server: müssen Sie den dritten oder vierten Menüpunkt wählen je nach Installationsmedium.</p>
+<p>Upgrade ist für die Migration von OSS-3-4-2 gedacht. Migration von OSS-4-X oder anderen CRANIX-Versionen erfolgt über Online-Update.</p>
+<p>Darüber hinaus können Sie das Installationsmedium zum Starten vom <strong>CloneTool</strong> auf nicht netzwerkbootfähigen Rechner verwenden.</p>
+<p>&nbsp;</p>
