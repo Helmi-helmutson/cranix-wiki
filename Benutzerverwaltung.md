@@ -2,7 +2,7 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T16:48:46.979Z
+date: 2026-06-01T16:50:21.221Z
 tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: markdown
 dateCreated: 2026-06-01T15:39:18.494Z
@@ -237,7 +237,7 @@ Nach dem Abarbeiten der eingelesenen Datei wird die neue, aktuelle Benutzerliste
 Hier ist eine Beispieldatei für das erste Laden des Systems mit  
 unterschiedlichen Passwort-Vergaben:
 
-```plaintext{.line-numbers}
+```plaintext?
 GEBURTSTAG:NACHNAME:VORNAME:PASSWORT:KLASSE 
 11.10.1986:Klein:Aladar:12345:9A 
 4.08.1986:Micuc:Emil::9A
@@ -248,27 +248,16 @@ GEBURTSTAG:NACHNAME:VORNAME:PASSWORT:KLASSE
 
 Die resultierenden Dateien:
 
--   /home/groups/SYSADMINS/userimports/<datum>.<uhrzeit>/userlist.9A.txt
--   /home/groups/SYSADMINS/userimports/<datum>.<uhrzeit>/userlist.10A.txt
+-   /home/groups/SYSADMINS/userimports/DATUM.UHRZEIT/userlist.9A.txt
+-   /home/groups/SYSADMINS/userimports/DATUM.UHRZEIT/userlist.10A.txt
 
 ## Passwortsicherheit
 
-Die Sicherheit der Passwörter wird im CRANIX auf zwei Ebenen  
-sichergestellt. Zunächst wird jedes Passwort beim Anlegen von Benutzern  
-bzw. beim Ändern der Passwörter durch Benutzter auf bestimmte  
-Sicherheitsmerkmale kontrolliert. Weiterhin kann man festlegen wie lange  
-ein Passwort gültig ist, also nach wie vielen Tagen Benutzer ihre  
-Passwörter ändern müssen bzw. wie mit fehlerhaften Anmeldeversuchen  
-umgegangen werden soll.
+Die Sicherheit der Passwörter wird im CRANIX auf zwei Ebenen sichergestellt. Zunächst wird jedes Passwort beim Anlegen von Benutzern bzw. beim Ändern der Passwörter durch Benutzter auf bestimmte Sicherheitsmerkmale kontrolliert. Weiterhin kann man festlegen wie lange ein Passwort gültig ist, also nach wie vielen Tagen Benutzer ihre Passwörter ändern müssen bzw. wie mit fehlerhaften Anmeldeversuchen umgegangen werden soll.
 
 ### Überprüfung von Passwörtern
 
-Beim Anlegen neuer Benutzer bzw. beim Ändern der Passwörter von  
-vorhandenen Benutzern wird die Qualität des Passwortes überprüft. Um die  
-Komplexität der Passwörter besser kontrollieren bzw. beschreiben zu  
-können, liefert der CRANIX ein eigenes Script für diesen Zweck:  
-**/usr/share/cranix/tools/check\_password\_complexity.sh** Dieses prüft ob  
-das Passwort folgende Voraussetzungen erfüllt:
+Beim Anlegen neuer Benutzer bzw. beim Ändern der Passwörter von vorhandenen Benutzern wird die Qualität des Passwortes überprüft. Um die Komplexität der Passwörter besser kontrollieren bzw. beschreiben zu können, liefert der CRANIX ein eigenes Script für diesen Zweck: **/usr/share/cranix/tools/check\_password\_complexity.sh** Dieses prüft ob  das Passwort folgende Voraussetzungen erfüllt:
 
 Technische Voraussetzungen:
 
