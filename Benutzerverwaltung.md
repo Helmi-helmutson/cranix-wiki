@@ -2,7 +2,7 @@
 title: Benutzerverwaltung
 description: 
 published: true
-date: 2026-06-01T17:08:03.217Z
+date: 2026-06-02T05:53:59.367Z
 tags: anlegen, bearbeiten, benutzer, editieren,, löschen, passwort
 editor: markdown
 dateCreated: 2026-06-01T15:39:18.494Z
@@ -261,8 +261,8 @@ Beim Anlegen neuer Benutzer bzw. beim Ändern der Passwörter von vorhandenen Be
 
 Technische Voraussetzungen:
 
--   Minimale Passwortlänge ist eingehalten. Die minimale Passwortlänge wird durch die globale Variable MINIMAL\_PASSWORD\_LENGTH festgelegt.
--   Maximale Passwortlänge ist eingehalten. Die maximale Passwortlänge wird durch die globale Variable MAXIMAL\_PASSWORD\_LENGTH festgelegt.
+-   Minimale Passwortlänge ist eingehalten. Die minimale Passwortlänge wird durch die globale Variable `MINIMAL_PASSWORD_LENGTH` festgelegt.
+-   Maximale Passwortlänge ist eingehalten. Die maximale Passwortlänge wird durch die globale Variable `MAXIMAL_PASSWORD_LENGTH` festgelegt.
 -   Das Passwort darf kein '&' und '§'-Zeichen enthalten. Das kommt aus einer Restriktion von Office365 von Microsoft.
 -   Das Passwort darf nicht mit Bindestrich '-' beginnen.
 
@@ -318,15 +318,21 @@ Grundsätzlich können diese Werte von der Kommandozeile mit samba-tool Befehl a
 
 **Auflisten der Befehlsoptionen**
 
-`samba-tool domain passwordsettings set -h`
+```plaintext 
+  samba-tool domain passwordsettings set -h
+  ```
 
 Bei der Installation wird für die Passwörter ein Jahr als Gültigkeit  gesetzt. Mit folgendem Befehl werden alle Benutzer dazu gezwungen, die  Passwörter halbjährlich zu ändern:
 
-`samba-tool domain passwordsettings set --max-pwd-age=182`
+```plaintext
+  samba-tool domain passwordsettings set --max-pwd-age=182
+  ```
 
 Mit dem Wert **0** für **\--max-pwd-age** erreicht man, dass die Passwörter nie ihre Gültigkeit verlieren. Möchte man, dass einzelne Benutzer ihre Passwörter nie ändern müssen, muss man folgenden Befehl verwenden:
 
-`samba-tool user  setexpiry --noexpiry <uid>`
+```plaintext 
+  samba-tool user  setexpiry --noexpiry <uid>
+  ```
 
 ## Benutzer über cranix-api verwalten
 
@@ -346,12 +352,14 @@ crx_api_text.sh GET text/{userName}/grousp Listet alle Gruppen auf in der der Be
 
 Zuerst muss man eine Datei mit einem JSON-Hash der Benutzerdaten erstellen. Diese muss mindestens die obligatorische Felder erhalten:
 
-> `{`  
-> `   "sn" : "Mouse",`  
-> `   "givenName" : "Micky",`  
-> `   "birthDay" : "2007.04-17",`  
-> `   "role" : "students"`  
-> `}`
+  ```json
+  	 {  
+			"sn" : "Mouse", 
+			"givenName" : "Micky",
+			"birthDay" : "2007.04-17",
+			"role" : "students"	
+  	}
+  ```
 
 Dieser muss in einer Datei gespeichert werden und kann nun mit folgendem Call den Benutzer erstellen:
 
