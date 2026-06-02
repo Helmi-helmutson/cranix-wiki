@@ -2,7 +2,7 @@
 title: Netzwerkverwaltung
 description: 
 published: true
-date: 2026-06-02T07:12:02.035Z
+date: 2026-06-02T07:29:53.132Z
 tags: räume, hardwarekonfiguration, software, image, clonetool, clonen
 editor: markdown
 dateCreated: 2026-06-02T07:12:02.035Z
@@ -22,7 +22,7 @@ Für WLAN-Geräte wurden sog. private WLAN-Adressen eingeführt. Dieses Feature 
  [https://support.apple.com/de-de/HT211227 Apple]
  [https://www.heise.de/news/iOS-14-Private-WLAN-Adressen-koennen-fuer-Probleme-sorgen-4907542.html Heise]
 
-== Hardwarekonfigurationen ==
+## Hardwarekonfigurationen 
 Die am CRANIX registrierten Geräte erhalten sog. Gerätekonfigurationen. Die Gerätekonfigurationen legen fest, wie die Geräte mit dem CRANIX verwendet werden können oder welche Funktion die Geräte im Netz haben. Ein Gerätekonfiguration wird mit folgenden Parametern erstellt.
 
 {|class="wikitable" style="text-align: lef;"
@@ -75,7 +75,7 @@ Der CRANIX liefert einige vordefinierte Rechnerkonfigurationen:
 
 Wenn Sie das CloneTool von CRANIX nicht benutzen wollen, nehmen Sie Geräte, die in die Domäne aufgenommen werden müssen, in die vordefinierte Gerätekonfiguration Win10-64-Domain auf.
 
-== Räume ==
+## Räume ##
 
 Räume können über die Adminoberfläche unter Netzwerk -> Räume verwaltet und erstellt werden.
 Beim Anlegen können/müssen folgende Angaben gemacht werden:
@@ -102,7 +102,7 @@ Beim Anlegen können/müssen folgende Angaben gemacht werden:
 | Netzwerk || || Ist vordefiniert || Ja || Nein
 |}
 
-===Raumkontrolle===
+### Raumkontrolle ###
 Zur Zeit gibt es folgende Einstellungen für die Raumkontrolle:
 * '''inRoom'''  Räume mit "inRoom"-Kontrolle dürfen nur aus dem Raum selbst kontrolliert werden. 
 * '''no''' In diesen Räumen gibt es keine Möglichkeit für die Raumkontrolle. Geräte aus solchen Räumen haben immer Zugriff auf alle Dienste des Servers. Für diese Räume kann man keine Raumzugriffregel erstellen. Allerdings kann man für diese Räume Firewallregel setzen, um den Zugriff auf das Internet aus diesen Räumen zu steuern.
@@ -111,7 +111,7 @@ Zur Zeit gibt es folgende Einstellungen für die Raumkontrolle:
 
 Systemadministratoren können für Räume mit Raumkontrolle '''inRoom''', '''allTeachers''' und '''sysadminsOnly''' einen Zugriffszeitplan erstellen. Dh. zu bestimmten Zeitpunkten wird die Firewall in einen definierten Zustand gesetzt oder bestimmte Aktionen an den Clients werden ausgeführt.
 
-===Raumaktionen===
+### Raumaktionen ###
 Über das Action-Icon können folgende Aktionen für alle Geräte in den ausgewählten Räumen ausgeführt werden:
 * '''Einschalten''' Funktioniert nur mit Geräten, bei denen in BIOS/Firmware WOL erlaubt ist.
 * '''Ausschalten''' Funktioniert nur mit Geräten, auf denen '''cranix-client''' installiert ist. 
@@ -123,7 +123,7 @@ Systemadministratoren können für Räume mit Raumkontrolle '''inRoom''', '''all
 * '''abmelden''' Angemeldete Benutzer abmelden.
 * '''löschen''' Raum und alle Geräte im Raum werden gelöscht.
 
-== Geräte ==
+## Geräte ##
 Klickt man unter '''Netzwerk''' -> '''Räume'''  auf den Namen eines Raumes erhält man eine Liste mit den, in diesem Raum registrierten, Geräten. Man kann alle oder einzelne Geräte markieren und unter '''Aktionen''' folgende Funktionen mit den gewählten Rechnern ausführen:
 * Eine CSV-Liste der gewählten Geräte herunterladen.
 * Die gewählten Geräte löschen.
@@ -135,7 +135,7 @@ Bei einzelnen Geräten kann man durch das Klicken der Icons in der Zeile des Ger
 * DHCP-Parameter setzten. Man kann hier dem Rechner individuelle DHCP-Parameter setzten. '''Wichtig: Setzt man hier einen Parameter falsch, führt das ggf. dazu, dass der DHCP-Server nicht startet. Bitte diese Funktion nur dann benutzen, wenn Sie 100%-ig wissen, was Sie tun.'''
 * Das Gerät löschen
 
-===Geräte manuell registrieren===
+### Geräte manuell registrieren ###
 Klickt man unter '''Netzwerk''' -> '''Räume''' beim entsprechenden Raum auf das '''+''' Zeichen, kann ein Gerät dem Raum hinzugefügt werden. 
 
 Wird die Registrierung von einem nicht registrierten Rechner ausgeführt, erkennt der Server die '''MAC-Adresse''' des Clients und trägt diese in das entsprechende Feld ein. Ist das nicht der Fall muss die '''MAC-Adresse''' manuell eingetragen werden. Das Feld '''MAC-Adresse''' ist ein Textfeld. Es können mehrere MAC-Adressen eingetragen werden. In diesem Fall werden der MAC-Adressen der Reihe nach die nächste freie IP-Adresse im Raum zugewiesen.
@@ -148,7 +148,7 @@ Hat der Rechner eine WLAN-Karte die auch benutzt wird, muss deren MAC-Adresse in
 
 Die Felder '''Seriennummer''' und '''Inventarnummer''' können bei Bedarf ausgefüllt werden.
 
-===Geräte importieren===
+### Geräte importieren ###
 Geräte können von der Kommandozeile als Benutzer '''root''' mit folgenden Befehl aus einer CSV-Datei importiert werden:
  crx_api_upload_file.sh devices/import <Dateiname>
 Die Datei hat folgendes Format:
@@ -179,7 +179,7 @@ Hier ist eine ganz einfache Beispieldatei:
   edv1;AA:BB:CC:DD:EE:03
   edv1;AA:BB:CC:DD:EE:04
 
-===Hardwarekonfigurationen von Geräten ändern===
+### Hardwarekonfigurationen von Geräten ändern ###
 
 #Wenn nötig neue Hardwarekonfigurationen anlegen
 #Geräte -> Gerät suchen -> bearbeiten -> Hardwarekonfigurationen wählen
@@ -196,49 +196,69 @@ Will man mehrere Rechner in einem Raum umstellen, kann man wie folgt vorgehen:
 #Auf dem Server mit dem Befehl '''salt-key -d "minion.name"''' den Schlüssel des Minions löschen, wenn dieser vorhanden ist.
 #Dienst salt-minion auf dem Client starten.
 
-==CloneTool==
+## CloneTool ##
+  
 Der CRANIX verfügt über ein eingebautes Werkzeug zum Klonen von PCs. Dieses Werkzeug unterstützt auch NTFS Partitionen und das Klonen von mehreren Festplatten und Partitionen. 
-<div class=warningbox>WICHTIG Da die Verwendung von Masterrechner zu mehr Problemen geführt hat, als er hätte vermeiden können, gibt es ab '''CRANIX 4-3''' keine Masterrechner mehr. Das heißt: von allen Rechner können Images gezogen werden.</div>
+  
+  
+> WICHTIG Da die Verwendung von Masterrechner zu mehr Problemen geführt hat, als er hätte vermeiden können, gibt es ab '''CRANIX 4-3''' keine Masterrechner mehr. Das heißt: von allen Rechner können Images gezogen werden.
+{.is-info}
+
 Die so erstellte Partitionimages und die Partitionierung kann nun auf Rechner mit der selben Hardwarekonfiguration übertragen werden. In folgenden Schritten muss ein Rechner als Masterrechner vorbereitet werden:
 
-===Windowsrechner für Klonen vorbereiten===
-*Den lokalen Administrator aktivieren! Öffnen Sie dazu einen Terminal (Eingabeaufforderung) mit der Option "Als Administrator ausführen" und führen Sie folgenden Befehl aus: <code>net user administrator * /active:yes</code>
-*<div class=warningbox>'''Melden Sie sich als lokaler Administrator an!''' Die Verwaltung der Clients funktioniert nur dann, wenn Sie die folgenden Schritte als Benutzer '''Administrator''' ausführen.</div>
-*Starten Sie die Kommandozeile oder PowerShell (WIN+X) oder über Start->Ausführen "CMD" mit STRG+UMSCHALT+ENTER.
-*Hybernatemodus abschalten: <code>powercfg /h off</code>
-*Bitlocker deaktivieren: <code>manage-bde -off c:</code>
-*Rechner an CRANIX registrieren: http://admin. Das machen Sie in der Administrationsoberfläche über '''Räume''' oder '''Geräte'''.
-*Alle Updates installieren.
-*Das [https://repo.cephalix.eu/Downloads/ClientSetup_py3.exe CRANIX Client Setupprogram] herunterladen. 
-*Rechner vom Netzwerk trennen, sonst wird der Rechner in die Domäne aufgenommen. Vor dem Clonen darf der Rechner nicht in der Domäne sein.
-*ClientSetup.exe auf dem Master installieren. ClientSetup im silent mode installieren: <br><code>ClientSetup_py3.exe /i /passive MinionName=<hostname>.<dns-domainname>.</code><br> Alternativ können Sie den Installer per Doppelklick starten und den Minionnamen ins Feld '''Minionname''' eintragen. Der auf dem CRANIX-Server eingetragene Minionname des FQHN des Rechners. Also ''hostname''.''dns-domainname''.<br>'''WICHTIG rechner- drucker und domainnamen IMMER klein schreiben!!!'''
-*Rechner auschalten.
-*Rechner mit Netzwerk verbinden.
-*Neustart über das Netzwerk ins CloneTool.
-*Starten Sie nun '''Rechner klonen'''.
-*Als erstes müssen Sie die zu klonenden Partitionen auswählen
-*Geben Sie den zu klonenden Partitionen eine Beschreibung.
-*Anschließend müssen zu den Partitionen verschiedene Angaben gemacht werden:
-*Betriebssystem: Win10, WinBoot, Linux, Data
-*Bei Win10 müssen Sie daneben angeben, ob der Rechner in die Domäne aufgenommen werden muss oder nicht.
-*Anschließend muss ein Imagingtool ausgewählt werden. '''Zpartclone''' bietet den besten Durchsatz und Komprimierung. Welches Tool mit Ihrer Hardware bzw. Netzwerk am besten zusammenarbeitet müssen Sie selber ermitteln. '''dd''' und '''dd_rescue''' erstellen eine 1 zu 1 Kopie der Partitionen. '''dd_rescue''' kann auch beschädigte Partitionen lesen.
+### Windowsrechner für Klonen vorbereiten ###
+- Den lokalen Administrator aktivieren! Öffnen Sie dazu einen Terminal (Eingabeaufforderung) mit der Option "Als Administrator ausführen" und führen Sie folgenden Befehl aus: 
+  ```plaintext 
+  		net user administrator * /active:yes
+  ```
+  
+> Melden Sie sich als lokaler Administrator an! Die Verwaltung der Clients funktioniert nur dann, wenn Sie die folgenden Schritte als Benutzer **Administrator** ausführen.
+>{.is-warning}
+
+
+- Starten Sie die Kommandozeile oder PowerShell (WIN+X) oder über Start->Ausführen "CMD" mit STRG+UMSCHALT+ENTER.
+	- Hybernatemodus abschalten: <code>powercfg /h off</code>
+	- Bitlocker deaktivieren: <code>manage-bde -off c:</code>
+	- Rechner am CRANIX registrieren: http://admin. Das machen Sie in der Administrationsoberfläche über '''Räume''' oder '''Geräte'''.
+- Alle Updates installieren.
+- Die [ClientSetup_py3.exe](https://repo.cephalix.eu/Downloads/ClientSetup_py3.exe) herunterladen. 
+- Rechner vom Netzwerk trennen, sonst wird der Rechner in die Domäne aufgenommen. Vor dem Clonen darf der Rechner nicht in der Domäne sein.
+- ClientSetup.exe auf dem Rechner installieren:
+  - ClientSetup im silent mode installieren:  
+  ```plaintext 
+  ClientSetup_py3.exe /i /passive MinionName=hostname.dns-domainname
+  ```
+  - Alternativ können Sie den Installer per Doppelklick starten und den Minionnamen ins Feld '''Minionname''' eintragen. Der auf dem CRANIX-Server eingetragene Minionname des FQHN des Rechners. Also ''hostname''.''dns-domainname''.<br>
+>   '''WICHTIG rechner- drucker und domainnamen IMMER klein schreiben!!!'''
+> *Rechner auschalten. 
+{.is-warning}
+
+- Rechner mit Netzwerk verbinden.
+- Neustart über das Netzwerk ins CloneTool.
+- Starten Sie nun '''Rechner klonen'''.
+- Als erstes müssen Sie die zu klonenden Partitionen auswählen
+- Geben Sie den zu klonenden Partitionen eine Beschreibung.
+- Anschließend müssen zu den Partitionen verschiedene Angaben gemacht werden:
+- Betriebssystem: Win10, WinBoot, Linux, Data
+- Bei Win10 müssen Sie daneben angeben, ob der Rechner in die Domäne aufgenommen werden muss oder nicht.
+- Anschließend muss ein Imagingtool ausgewählt werden. '''Zpartclone''' bietet den besten Durchsatz und Komprimierung. Welches Tool mit Ihrer Hardware bzw. Netzwerk am besten zusammenarbeitet müssen Sie selber ermitteln. '''dd''' und '''dd_rescue''' erstellen eine 1 zu 1 Kopie der Partitionen. '''dd_rescue''' kann auch beschädigte Partitionen lesen.
 *Wenn alle Partitionen geklont wurden, können Sie mit der Übertragung der Images auf den anderen Rechnern anfangen.
 
-===Rechner wiederherstellen===
+### Rechner wiederherstellen ###
 Es gibt mehrere Möglichkeiten einen Rechner über das CloneTool wiederherstellen.
-====Manuelle Wiederherstellung====
-*Rechner über Netzwerk starten.
-*CloneTool auswählen.
-*Melden Sie sich als Administrator an.
-*Seit CRANIX-4-1 können Rechner direkt im CloneTool registriert werden. Merkt das CloneTool, das Sie sich an einem nicht registrierten Rechner angemeldet haben, werden Sie zur Registrierung weitergeleitet. Bitte beachten Sie, dass Sie jedoch in diesem Fall nur den vom CRANIX generierten Rechnernamen verwenden können. Möchten Sie einen eigenen Namen für den Rechner verwenden, müssen Sie die MAC-Adresse des Rechners vor dem Start des CloneTools am Server registrieren.
-*Wählen Sie '''Restore'''
-*Die Festplatte des Rechners wird partitioniert und die Partitionen mit dem Image bespielt.
+#### Manuelle Wiederherstellung ####
+- Rechner über Netzwerk starten.
+- CloneTool auswählen.
+- Melden Sie sich als Administrator an.
+- Seit CRANIX-4-1 können Rechner direkt im CloneTool registriert werden. Merkt das CloneTool, das Sie sich an einem nicht registrierten Rechner angemeldet haben, werden Sie zur Registrierung weitergeleitet. Bitte beachten Sie, dass Sie jedoch in diesem Fall nur den vom CRANIX generierten Rechnernamen verwenden können. Möchten Sie einen eigenen Namen für den Rechner verwenden, müssen Sie die MAC-Adresse des Rechners vor dem Start des CloneTools am Server registrieren.
+- Wählen Sie '''Restore'''
+- Die Festplatte des Rechners wird partitioniert und die Partitionen mit dem Image bespielt.
 
-====Automatische Wiederherstellung====
+#### Automatische Wiederherstellung ####
 Über die Adminoberfläche kann für die Rechner eine Bootkonfiguration erstellt werden. Dadurch starten die Rechner beim nächsten Neustart automatisch in das CloneTool und starten das '''Restore'''. Anschließend starten die Rechner neu im installierten Betriebssystem. Diese Bootkonfigurationen können Sie unter '''Räume''' oder '''Geräte''' erstellen. Klicken Sie auf &#8942; neben dem Raum oder Gerät den oder das Sie wiederherstellen wollen und wählen Sie '''Klonen starten''' aus dem Kontextmenü. Alternativ können Sie mehrere Rechner bzw. Räume auswählen. Klicken Sie anschließend oben Rechts auf &#8942; und wählen Sie '''Klonen starten''' aus dem Kontextmenü. Da in diesem Fall das Klonen auf jedem Rechner separat gestartet wird, können auf einmal mehrere Rechner aus verschiedenen Gerätekonfigurationen wiederhergestellt werden.
 Tritt ein Fehler während des Klonvorgangs auf, können die erstellten Bootkonfigurationen gelöscht werden, damit die Rechner nicht wieder in das CloneTool starten. Das macht man wieder im Kontextmenü mit dem Menüpunkt '''Klonen anhalten'''.
 
-====Multicast Klonen====
+#### Multicast Klonen ####
 Wenn Ihr Netzwerk das anbietet, können Sie mehrere Rechner aus der selben Gerätekonfiguration über UDP-Multicast klonen. Der Vorteil dieses Verfahrens ist, dass das Image nur einmal an mehrere Geräte gesendet wird. Das heißt für die Geschwindigkeit des Klonens spielt es überhaupt keine Rolle wie viel Rechner Sie auf einmal klonen wollen. Der Nachteil von Multicast Klonen ist jedoch, dass die Switche dementsprechend konfiguriert werden müssen. Weiterhin genügt nur eine fehlerhafte Komponente (Netzwerkkarte, Netzwerkkabel, Switchport ...) und der ganze Klonvorgang wird ausgebremst. Multicast Klonen funktioniert nur über automatische Wiederherstellung. Bei Multicast Klonen ist es sehr wichtig, dass die zu wiederherstellenden Rechner die selbe Gerätekonfiguration haben, deshalb wird Multicast Klonen über den Menüpunkt '''Gerätekonfiugrationen''' in folgenden Schritten gestartet:
 #'''Gerätekonfiugrationen'''
 #Betroffene Gerätekonfiugration bearbeiten.
