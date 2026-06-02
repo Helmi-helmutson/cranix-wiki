@@ -2,7 +2,7 @@
 title: Netzwerkverwaltung
 description: 
 published: true
-date: 2026-06-02T07:29:53.132Z
+date: 2026-06-02T07:32:45.982Z
 tags: räume, hardwarekonfiguration, software, image, clonetool, clonen
 editor: markdown
 dateCreated: 2026-06-02T07:12:02.035Z
@@ -228,10 +228,12 @@ Die so erstellte Partitionimages und die Partitionierung kann nun auf Rechner mi
   ```plaintext 
   ClientSetup_py3.exe /i /passive MinionName=hostname.dns-domainname
   ```
-  - Alternativ können Sie den Installer per Doppelklick starten und den Minionnamen ins Feld '''Minionname''' eintragen. Der auf dem CRANIX-Server eingetragene Minionname des FQHN des Rechners. Also ''hostname''.''dns-domainname''.<br>
->   '''WICHTIG rechner- drucker und domainnamen IMMER klein schreiben!!!'''
-> *Rechner auschalten. 
+  - Alternativ können Sie den Installer per Doppelklick starten und den Minionnamen ins Feld '''Minionname''' eintragen. Der auf dem CRANIX-Server eingetragene Minionname des FQHN des Rechners. Also ''hostname''.''dns-domainname''.
+  
+>   WICHTIG rechner- drucker und domainnamen IMMER klein schreiben!!!
 {.is-warning}
+  
+- Rechner auschalten. 
 
 - Rechner mit Netzwerk verbinden.
 - Neustart über das Netzwerk ins CloneTool.
