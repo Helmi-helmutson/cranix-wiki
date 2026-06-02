@@ -2,7 +2,7 @@
 title: Netzwerkverwaltung
 description: 
 published: true
-date: 2026-06-02T07:32:45.982Z
+date: 2026-06-02T07:48:38.750Z
 tags: räume, hardwarekonfiguration, software, image, clonetool, clonen
 editor: markdown
 dateCreated: 2026-06-02T07:12:02.035Z
@@ -262,18 +262,18 @@ Tritt ein Fehler während des Klonvorgangs auf, können die erstellten Bootkonfi
 
 #### Multicast Klonen ####
 Wenn Ihr Netzwerk das anbietet, können Sie mehrere Rechner aus der selben Gerätekonfiguration über UDP-Multicast klonen. Der Vorteil dieses Verfahrens ist, dass das Image nur einmal an mehrere Geräte gesendet wird. Das heißt für die Geschwindigkeit des Klonens spielt es überhaupt keine Rolle wie viel Rechner Sie auf einmal klonen wollen. Der Nachteil von Multicast Klonen ist jedoch, dass die Switche dementsprechend konfiguriert werden müssen. Weiterhin genügt nur eine fehlerhafte Komponente (Netzwerkkarte, Netzwerkkabel, Switchport ...) und der ganze Klonvorgang wird ausgebremst. Multicast Klonen funktioniert nur über automatische Wiederherstellung. Bei Multicast Klonen ist es sehr wichtig, dass die zu wiederherstellenden Rechner die selbe Gerätekonfiguration haben, deshalb wird Multicast Klonen über den Menüpunkt '''Gerätekonfiugrationen''' in folgenden Schritten gestartet:
-#'''Gerätekonfiugrationen'''
-#Betroffene Gerätekonfiugration bearbeiten.
-#Untere Menütab '''Mitglieder''' wählen
-#Nun werden die Geräte raumweise gruppiert aufgelistet. Sie können oben rechts die Gruppierung ändern.
-#Die zu klonenden Rechner auswählen.
-#Rechts oben mit dem grünen Ikon '''Multicast Klonen starten''' werden die benötigte Bootkonfigurationen erstellt.
-#Rechts oben mit dem roten Ikon '''Multicast Klonen anhalten''' können die Bootkonfigurationen bei Bedarf gelöscht werden.
+1. **Gerätekonfiugrationen**
+1. Betroffene Gerätekonfiugration bearbeiten.
+1. Untere Menütab '''Mitglieder''' wählen
+1. Nun werden die Geräte raumweise gruppiert aufgelistet. Sie können oben rechts die Gruppierung ändern.
+1. Die zu klonenden Rechner auswählen.
+1. Rechts oben mit dem grünen Ikon '''Multicast Klonen starten''' werden die benötigte Bootkonfigurationen erstellt.
+1. Rechts oben mit dem roten Icon '''Multicast Klonen anhalten''' können die Bootkonfigurationen bei Bedarf gelöscht werden.
 
-===Klonen von Laptops===
+### Klonen von Laptops ###
 Laptops kann man genau so wie andere Rechner über ihren Ethernet-Anschluss geklont werden. Damit die Laptops auch dann identisch behandelt werden, wenn sie über WLAN mit dem CRANIX-Server verbunden sind, müssen ihre WLAN-Netzwerkkarten auch mit der permanenten MAC-Adresse registriert werden. Es ist sehr wichtig, dass die WLAN-Karte so konfiguriert ist, dass sie im CRANIX-WLAN-Netz immer die gleiche MAC-Adresse verwendet.  
 
-===Klonen von Tablets über die '''cloneProxy'''===
+### Klonen von Tablets über die **cloneProxy** ###
 Tablets haben nur einen WLAN-Anschluss, deshalb können diese nicht per PXE-Boot in das CloneTool gestartet werden. Allerdings kann man dieses Problem mit Hilfe eines USB-Ethernet-Adapters umgehen. Besorgt man für jedes Tablet einen separaten Adapter, kann man Tablets wie Laptops im Netz behandeln. Allerdings ist es sehr unwirtschaftlich für jedes Tablet einen separaten Adapter zu kaufen.
 Weiterhin ist Chaos vorprogrammiert, da die Adapter nicht vertauscht werden dürfen, da ansonsten die Ethernet- und WLAN-Karten Zuordnung nicht mehr passt. Das bedeutet ein Rechner heißt anders, wenn er per USB-Ethernet-Adapter geklont wird, als wenn er per WLAN im Netz benutzt wird.
 
@@ -281,24 +281,28 @@ Um dieses Problem zu umgehen, wurde im CRANIX-4-3 eine neue Gerätekonfiguration
 
 Eine oder mehrere USB-Ethernet-Adapter müssen in dieser Gerätekonfiguration registriert werden. Dabei spielt es keine Rolle in welchem Raum die Adapter eingetragen werden. Sie können es am einfachsten in '''SERVER_NET''' machen. Vergessen Sie nicht bei der Registration einen eindeutigen Namen und die Gerätekonfiguration '''cloneProxy''' zu zuweisen. Alternativ können Sie einen Raum für die USB-Ethernet-Adapter mit entsprechenden anzahl von Geräten und der Gerätekonfiguration '''cloneProxy''' erstellen. Dieses Vorgehen hat den Vorteil, dass Sie die USB-Ethernet-Adapter nicht im Voraus registrieren müssen. Sie können es nach dem Anmelden in CloneTool machen. Auch die MAC-Adresse der WLAN-Karte muss im Voraus registriert werden, das können Sie auch im CloneTool machen. Ein Raum mit einer entsprechenden richtigen Gerätekonfiguration muss lediglich vorher für die Tablets erstellt werden. Hier sin die Schritte zum Klonen eines Tablets ohne diese vorher zu registrieren.
 
-#Raum 'usb-adapter' mit Gerätekonfiguration '''cloneProxy''' für die entsprechenden Anzahl von USB-Ethernet-Adapter anlegen.
-#Eine neue Gerätekonfiguration für die Tablets erstellen.
-#Einen Raum oder mehrere Räume für die Tablets anlegen.
-#Tablet für das Klonen, wie vorher beschrieben, vorbereiten.
-#Tablet über den USB-Ethernet-Adapter über PXE-Boot in CloneTool starten.
-#Als Administrator in CloneTool anmleden.
-#USB-Ethernet-Adapter in Raum 'usb-adapter' registrieren
-#Tablet in einem, für die Tablets angelegten Raum registrieren.
-#Rechner klonen. 
-'''WICHTIG''' Der Klonvorgang läuft über den USB-Ethernet-Adapter ab. Dieser darf erst nach dem Neustart des Gerätes entfernt werden.
+1. Raum 'usb-adapter' mit Gerätekonfiguration '''cloneProxy''' für die entsprechenden Anzahl von USB-Ethernet-Adapter anlegen.
+1. Eine neue Gerätekonfiguration für die Tablets erstellen.
+1. Einen Raum oder mehrere Räume für die Tablets anlegen.
+1. Tablet für das Klonen, wie vorher beschrieben, vorbereiten.
+1. Tablet über den USB-Ethernet-Adapter über PXE-Boot in CloneTool starten.
+1. Als Administrator in CloneTool anmleden.
+1. USB-Ethernet-Adapter in Raum 'usb-adapter' registrieren
+1. Tablet in einem, für die Tablets angelegten Raum registrieren.
+1. Rechner klonen. 
+  
+> '''WICHTIG''' Der Klonvorgang läuft über den USB-Ethernet-Adapter ab. Dieser darf erst nach dem Neustart des Gerätes entfernt werden.
+{.is-warning}
+
 
 Bei der Wiederherstellung muss das Tablet auch über ein USB-Ethernet-Adapter gestartet werden. Bitte beachten Sie, das je nach dem ob Sie das Klonen mit einem nicht registrierten USB-Ethernet-Adapter und/oder WLAN-Karte machen, müssen Sie das Tablet zwei, ein oder kein mal registrieren. Bei der Registrierung der WLAN-Karte steht oben ein Hinweis darauf. Bitte bei der Registrierung im CloneTool unbedingt alle Hinweise mitlesen!
 
-====Surface klonen====
+#### Surface klonen ####
 Surface ist ein Tablet von Microsoft und sollte im Prinzip genau so wie andere Tablets mit Hilfe eines USB-Ethernet-Adapters geklont werden können. Allerdings gibt es 2 Probleme. 
-#Laut [https://docs.microsoft.com/de-de/surface/ethernet-adapters-and-surface-device-deployment Microsoft] unterstützt das Surface zwar auch USB-Ethernet-Adapter von Drittanbieter. Allerdings ist ein PXE-Boot nur mit originalem Microsoft Produkten möglich.
-#Wir haben das PXE-Boot mit einem Surface Pro mit Surface USB 3,0-Gigabit-Ethernet-Adapter (USB-A) getestet. PXE-Start funktionierte zwar, auch die UFEI-Startdatei grub.efi wurde geladen, aber danach war Schluss. Der Bootprozess ging nicht weiter. Auch die Umstellung einige Firmware Parameter haben nicht geholfen.
-Deshalb haben wir einen anderen Weg gesucht und gefunden. Das [https://repo.cephalix.eu/Downloads/CRANIX-4-3-x86_64.iso CRANIX Installations-CD] beinhaltet den Menüpunkt '''CloneTool'''. Dieser wurde genau für Geräte die nicht über PXE starten können entwickelt. Diese ISO muss auf ein USB-C-Stick geschrieben werden und das Surface muss so eingestellt werden, dass dieses vom USB starten kann. Damit das Surface von USB starten und geklont werden kann müssen Sie folgende Schritte ausführen:
+
+  - [Laut](https://docs.microsoft.com/de-de/surface/ethernet-adapters-and-surface-device-deployment) unterstützt das Surface zwar auch USB-Ethernet-Adapter von Drittanbieter. Allerdings ist ein PXE-Boot nur mit originalem Microsoft Produkten möglich.
+ - Wir haben das PXE-Boot mit einem Surface Pro mit Surface USB 3,0-Gigabit-Ethernet-Adapter (USB-A) getestet. PXE-Start funktionierte zwar, auch die UFEI-Startdatei grub.efi wurde geladen, aber danach war Schluss. Der Bootprozess ging nicht weiter. Auch die Umstellung einige Firmware Parameter haben nicht geholfen.
+Deshalb haben wir einen anderen Weg gesucht und gefunden. Die [CRANIX-4-3-x86_64.iso](https://repo.cephalix.eu/Downloads/CRANIX-4-3-x86_64.iso) beinhaltet den Menüpunkt '''CloneTool'''. Dieser wurde genau für Geräte die nicht über PXE starten können entwickelt. Diese ISO muss auf ein USB-C-Stick geschrieben werden und das Surface muss so eingestellt werden, dass dieses vom USB starten kann. Damit das Surface von USB starten und geklont werden kann müssen Sie folgende Schritte ausführen:
 <gallery heights=200px widths=260px>
 Surface_firmware_secure_boot.png|Secure Boot
 Surface_firmware_tpm.png|TPM Einstellungen
@@ -307,67 +311,70 @@ Surface_firmware_reboot.png|Reboot
 CRANIX-DVD-Boot.png|Bootmenü
 </gallery>
 
-#BitLocker im Windows deaktivieren: https://www.wintotal.de/tipp/bitlocker-deaktivieren/
-#Die üblichen Einstellungen vornehmen: 
-##Den lokalen Administrator aktivieren!
-##net user administrator * /active:yes
-##Melden Sie sich als lokaler Administrator an!
-##Hybernatemodus abschalten: powercfg /h off
-#Tablet herunterfahren.
-#USB-C-Stick mit dem CRANIX und einen USB-A-Ethernet-Adapter anstecken.
-#Tablet so einschalten, dass die Firmware (Bios) gestartet wird:
-##Halten Sie die Lauter-Taste gedrückt.
-##Drücken Sie die Ein/Aus-Taste, und lassen Sie sie wieder los.
-#Nun müssen Sie in der Firmware folgende Einstellungen unternehmen:
-##Security -> Secure boot -> Change Configuration -> none
-##Security -> Trusted Plattform -> off
-##Boot order -> USB an erste Stelle setzten.
-##Die Firmware verlassen.
-#Anschließend startet Surface vom USB-Stick und Sie können das CloneTool aus dem Bootmenü auswählen.
+- BitLocker im Windows deaktivieren: https://www.wintotal.de/tipp/bitlocker-deaktivieren/
+- Die üblichen Einstellungen vornehmen: 
+	1. Den lokalen Administrator aktivieren!
+	1. net user administrator * /active:yes
+	1. Melden Sie sich als lokaler Administrator an!
+	1. Hybernatemodus abschalten: powercfg /h off
+- Tablet herunterfahren.
+- USB-C-Stick mit dem CRANIX und einen USB-A-Ethernet-Adapter anstecken.
+- Tablet so einschalten, dass die Firmware (Bios) gestartet wird:
+	- Halten Sie die Lauter-Taste gedrückt.
+	- Drücken Sie die Ein/Aus-Taste, und lassen Sie sie wieder los.
+- Nun müssen Sie in der Firmware folgende Einstellungen unternehmen:
+	- Security -> Secure boot -> Change Configuration -> none
+	- Security -> Trusted Plattform -> off
+	- Boot order -> USB an erste Stelle setzten.
+	- Die Firmware verlassen.
+- Anschließend startet Surface vom USB-Stick und Sie können das CloneTool aus dem Bootmenü auswählen.
 
-===Über WLAN klonen===
+### Über WLAN klonen ###
 Das geht doch gar nicht. In erster Linie ist das wirklich unmöglich, da man zur Zeit noch nicht über WLAN PXE booten kann. Man kann jedoch das CloneTool auch über das CRANIX-Installationsmedium starten und so das Klonen über den WLAN-Adapter durchführen. Das setzt jedoch eine SEHR stabile WLAN-Infrastruktur voraus.
 
-*Erstellen Sie ein [[Installation#Installationsmedium_erstellen|CRANIX-Installationsmedium]].
-*Booten Sie das Gerät über das CRANIX-Installationsmedium und starten Sie das Bootmenü CloneTool.
-*Das Bootsystem erkennt und aktiviert die WLAN-Karte des Gerätes, wenn dieses nicht mit einer Netzwerkkabel mit dem Netzwerk verbunden ist.
-*Das Bootsystem fragt nach der SSID des WLANs und nach den Zugangsdaten.
-*Anschließend gelangt man zum CloneTool, als wäre man über Ethernet verbunden und kann das CloneTool, wie gewohnt benutzen.
-*Bevor Sie sich am CloneTool anmelden und das Klonen starten, müssen Sie das CRANIX-Installationsmedium entfernen, wenn Sie über einen USB-Stick gebootet haben, sonst wird dieser auch als Festplatte erkannt.
+- Erstellen Sie ein [[Installation#Installationsmedium_erstellen|CRANIX-Installationsmedium]].
+- Booten Sie das Gerät über das CRANIX-Installationsmedium und starten Sie das Bootmenü CloneTool.
+- Das Bootsystem erkennt und aktiviert die WLAN-Karte des Gerätes, wenn dieses nicht mit einer Netzwerkkabel mit dem Netzwerk verbunden ist.
+- Das Bootsystem fragt nach der SSID des WLANs und nach den Zugangsdaten.
+- Anschließend gelangt man zum CloneTool, als wäre man über Ethernet verbunden und kann das CloneTool, wie gewohnt benutzen.
+- Bevor Sie sich am CloneTool anmelden und das Klonen starten, müssen Sie das CRANIX-Installationsmedium entfernen, wenn Sie über einen USB-Stick gebootet haben, sonst wird dieser auch als Festplatte erkannt.
 
-== Drucker ==
+## Drucker ## 
 Der CRANIX bietet die Möglichkeit Netzwerkdrucker im System zu registrieren: die Drucker können Räumen bzw. Rechnern als Standard oder als sonstiger Drucker zugewiesen werden. Weiterhin kann der CRANIX für Windows-Clients die Drucktertreiber bereitstellen. Im CRANIX können die Drucker direkt über die Adminoberfläche registriert und bearbeitet werden. Das geschieht unter dem Menü '''Geräte''' ->  '''Drucker'''. Ein direkter Zugriff auf das Druckersystem CUPS ist nur direkt auf dem CRANIX-Server selbst unter der URL https://localhost:631 möglich. Allerdings sollte das im normal Fall nicht erforderlich sein.
 Bitte beachten Sie den Unterschied zwischen Drucker und Druckerwarteschlange. Unter Drucker verstehen wir ein Druckergerät. Unter Druckerwarteschlange verstehen wir die Freigabe, unter der man von einem Client auf einen Drucker erreichen und Druckaufträge senden kann. Zu einem physikalischen Druckergerät können mehrere Druckerwarteschlangen existieren. Das kann zB. erforderlich sein, wenn man für einen Farbdrucker die Möglichkeit schwarz-weiß zu drucken auch anbieten möchte. Oder wenn ein Drucker auf verschiedene Medien (A3/A4) drucken kann. In solchen Fällen kann man für den selben Drucker mehrere Druckerwarteschlangen mit verschiedenen Einstellungen definieren.
 Im ersten Reiter des Menüs '''Drucker''' erhält man eine Liste der vorhanden Druckerwarteschlangen mit ihrem aktuellen Status. Hier können folgende Aktionen durchgeführt werden:
-* Klickt man auf den Namen der Druckerwarteschlange kann man diese bearbeiten.
-* Bereitstellung der Druckertreiber für Windows-Clients aktivieren und deaktivieren.
-* Druckerwarteschlange deaktivieren. Will man zB. wegen Wartungsarbeiten den Zugriff auf eine Druckerwarteschlange sperren, kann man die Annahme von Druckaufträgen deaktivieren.
-* Druckerwarteschlange zurücksetzten.
-* Druckerwarteschlange löschen. Löscht man eine Druckerwarteschlange wird das Druckergerät nur dann gelöscht, wenn nur eine Druckerwarteschlange zu diesem Gerät existiert.
-===Drucker anlegen===
+- Klickt man auf den Namen der Druckerwarteschlange kann man diese bearbeiten.
+- Bereitstellung der Druckertreiber für Windows-Clients aktivieren und deaktivieren.
+- Druckerwarteschlange deaktivieren. Will man zB. wegen Wartungsarbeiten den Zugriff auf eine Druckerwarteschlange sperren, kann man die Annahme von Druckaufträgen deaktivieren.
+- Druckerwarteschlange zurücksetzten.
+- Druckerwarteschlange löschen. Löscht man eine Druckerwarteschlange wird das Druckergerät nur dann gelöscht, wenn nur eine Druckerwarteschlange zu diesem Gerät existiert.
+
+### Drucker anlegen ###
 Zum Anlegen eines Druckergerätes werden folgende Parameter benötigt:
-* Name
-* MAC-Adresse
-* Raum in dem das Gerät registriert wird. Bitte beachten Sie, dass es hier nicht um den Raum geht, in dem die Druckerwarteschlange(n) des Gerätes bereitgestellt werden soll! Es empfiehlt sich die Drucker im SERVER_NET oder in einem, separat für die Drucker angelegtem Raum zu registrieren.
-* Druckertreiber. Für das setzen der Druckertreiber gibt es 2 Möglichkeiten. Entweder lädt man direkt eine PPD-Druckerbeschreibungsdatei hoch oder man wählt den Hersteller und das Model des Druckers. Taucht der zu installierende Drucker in der Liste nicht auf kann man in den meisten Fällen einen generischen Druckertreiber wählen. Wählen Sie dazu beim Hersteller '''Generic''' und als Model die Druckersprache. Für den meisten S/W Drucker eignet sich ''Generic PCL 5e Printer'' und für die Farbdrucker ''Generic PCL 6/PCL XL Printer''
+-  Name
+-  MAC-Adresse
+-  Raum in dem das Gerät registriert wird. Bitte beachten Sie, dass es hier nicht um den Raum geht, in dem die Druckerwarteschlange(n) des Gerätes bereitgestellt werden soll! Es empfiehlt sich die Drucker im SERVER_NET oder in einem, separat für die Drucker angelegtem Raum zu registrieren.
+-  Druckertreiber. Für das setzen der Druckertreiber gibt es 2 Möglichkeiten. Entweder lädt man direkt eine PPD-Druckerbeschreibungsdatei hoch oder man wählt den Hersteller und das Model des Druckers. Taucht der zu installierende Drucker in der Liste nicht auf kann man in den meisten Fällen einen generischen Druckertreiber wählen. Wählen Sie dazu beim Hersteller '''Generic''' und als Model die Druckersprache. Für den meisten S/W Drucker eignet sich ''Generic PCL 5e Printer'' und für die Farbdrucker ''Generic PCL 6/PCL XL Printer''
 
 Beim Anlegen eines Druckers werden folgende Aktionen ausgeführt:
-# Ein Gerät wird mit der Gerätekonfiguration <b>Printer</b> im gewählten Raum mit der gegebenen MAC-Adresse angelegt
-# Eine Druckerwarteschlange wird mit dem Namen des Druckergeräts in CUPS angelegt.
-# Die Druckerwarteschlange in CUPS wird aktiviert.
-# Die Verteilung von Druckertreiber für Windows-Clients wird aktiviert.
+-  Ein Gerät wird mit der Gerätekonfiguration <b>Printer</b> im gewählten Raum mit der gegebenen MAC-Adresse angelegt
+-  Eine Druckerwarteschlange wird mit dem Namen des Druckergeräts in CUPS angelegt.
+-  Die Druckerwarteschlange in CUPS wird aktiviert.
+-  Die Verteilung von Druckertreiber für Windows-Clients wird aktiviert.
 Die Druckerwarteschlange wird mit folgenden Standarparameter konfiguriert:
-* Papiergröße A4
-* Fehlerbehandlung: Druckerauftrag löschen
-* Druckerwarteschlange ist aktiv und nimmt Aufträge an.
+-  Papiergröße A4
+-  Fehlerbehandlung: Druckerauftrag löschen
+-  Druckerwarteschlange ist aktiv und nimmt Aufträge an.
 
- <b>Wichtig</b> Damit die Verteilung der Windows-Druckertreiber funktioniert muss 
- ein [[Anpassungsmöglichkeiten#Ein_Gruppenrichtlinienobjekt_erstellen|Gruppenrichtlinienobjekt erstellt]]  werden.
+>  <b>Wichtig</b> Damit die Verteilung der Windows-Druckertreiber funktioniert muss 
+>  ein [[Anpassungsmöglichkeiten#Ein_Gruppenrichtlinienobjekt_erstellen|Gruppenrichtlinienobjekt erstellt]]  werden.
+{.is-info}
 
-===Druckerwarteschlange anlegen===
+
+### Druckerwarteschlange anlegen ###
 Im dritten Reiter des Menüs '''Drucker''' kann man weitere Druckerwarteschlange zu den vorhandenen Druckergeräten anlegen. Anstatt MAC-Adresse und Raum muss man hier ein vorhandenes Druckergerät auswählen. Sonst gilt das Gleiche wie beim Anlegen eines Druckers. In diesem Fall wird nur eine Druckerwarteschlange in CUPS und SAMBA angelegt.
 
-===Druckerwarteschlange zu Räumen oder Rechner zuweisen===
+### Druckerwarteschlange zu Räumen oder Rechner zuweisen ###
 Da es in einem Netzwerk mehrere Druckerwarteschlangen gibt und nicht alle von überall benutzt werden sollten, kann man die Druckerwarteschlangen Räumen oder Geräten zuweisen. Dies geschieht unter dem Menüpunkt ''Netzwerk -> Räumen''. Hier klickt man auf den Namen des Raumes. Will man für einen Raum den Standarddrucker oder die Sonstigen Drucker festlegen muss man auf den zweiten Reiter ''Drucker'' klicken. Nun gelten diese Einstellungen für alle Windows-Clients in diesem Raum. Will man für einen Client spezielle Einstellungen festlegen, muss man auf Details/Bearbeiten beim Gerät drücken. Im unterem Feld kann man den Standard- oder die Sonstigen- Drucker festlegen.
 
 Die angelegten Druckerwarteschlangen können jedoch auch direkt von den Clients benutzt werden. 
@@ -375,17 +382,17 @@ Auf Windows-Clients ist es möglich unter der URL '''\\admin\<Druckerwarteschlan
 Um die Drucker von Linux- oder MAC-Clients nutzen zu können muss man die Globale Variable CUPS_SERVER folgendermaßen setzen:
   CUPS_SERVER=admin
 
-===Druckertreiber auf dem Server hinterlegen===
+### Druckertreiber auf dem Server hinterlegen ###
 Man kann beim Einrichten eines Druckers eine eigene ppd-Datei hochladen. Diese ppd-Datei wird jedoch nur für den eingerichteten Drucker hinterlegt. Will man einen Druckertreiber für später angelegten Drucker auch bereitstellen, muss man folgende Schritte ausführen:
 # Sich als '''root''' anmelden.
 # Druckerttreiberdatei packen: gzip <Ppd-Datei>.ppd
 # Gepackte Datei nach /usr/share/cups bewegen: mv <Ppd-Datei>.ppd /usr/share/cups
 # Datei dem System bekannt geben: /usr/share/cranix/tools/CreatePrinterPpd.pl
 
-===Treiberloses Drucken mit Windows-Client über IPP ab Version 10===
+### Treiberloses Drucken mit Windows-Client über IPP ab Version 10 ###
 Hier ist ein kompakter, praxisnaher Artikel für dein Setup mit CUPS und Windows 11:
 
-====🖨️ Drucken per IPP: CUPS einrichten & Windows 11 anbinden====
+#### 🖨️ Drucken per IPP: CUPS einrichten & Windows 11 anbinden ####
 
 '''🔧 1. CUPS-Server für IPP konfigurieren'''
 
@@ -438,7 +445,7 @@ Test im Browser:
 
  http://printserver:631/printers
 
-====💻 3. Windows 11: IPP-Drucker per Kommandozeile hinzufügen====
+#### 💻 3. Windows 11: IPP-Drucker per Kommandozeile hinzufügen ####
 
 '''⚙️ Feature aktivieren (falls nötig)'''
 
@@ -471,35 +478,36 @@ oder
  powershell
   Test-NetConnection printserver -Port 631
 
-====💻 4. Windows 11: IPP-Drucker manuell hinzufügen====
+#### 💻 4. Windows 11: IPP-Drucker manuell hinzufügen ####
 '''Methode 1:''' Automatisch hinzufügen (empfohlen)
 
-# Öffne '''Einstellungen'''
-# Gehe zu '''Bluetooth & Geräte → Drucker & Scanner'''
-# Klicke auf '''„Gerät hinzufügen“'''
-# Windows sucht nach verfügbaren Druckern
-# Wenn dein IPP-Drucker erscheint → '''Hinzufügen'''
+1. Öffne '''Einstellungen'''
+1. Gehe zu '''Bluetooth & Geräte → Drucker & Scanner'''
+1. Klicke auf '''„Gerät hinzufügen“'''
+1. Windows sucht nach verfügbaren Druckern
+1. Wenn dein IPP-Drucker erscheint → '''Hinzufügen'''
 
 👉 Funktioniert gut, wenn der Drucker im selben Netzwerk ist und IPP korrekt annonciert (z. B. via Bonjour/mDNS). Bei CRANIX-Server sollte das der Fall sein.
 
-'''Methode 2:''' Manuell über IPP-URL hinzufügen
+  
+### Methode 2: Manuell über IPP-URL hinzufügen
 
 Wenn der Drucker nicht automatisch gefunden wird:
 
-# Öffne '''Einstellungen → Drucker & Scanner'''
-# Klicke auf '''„Gerät hinzufügen“'''
-# Scrolle runter → '''„Der gewünschte Drucker ist nicht aufgeführt“''' Wähle: '''„Einen Drucker über eine TCP/IP-Adresse oder einen Hostnamen hinzufügen“'''
-# Bei Gerätetyp: '''„Web Services Device“** oder **„TCP/IP-Gerät“'''
-# URL des Druckers eingeben, z. B.:  ''ipp://printserver/ipp/lz-dr1'' oder ''http://printserver:631/ipp/lz-dr1''
-# Treiber auswählen (oder automatisch erkennen lassen)
+1. Öffne '''Einstellungen → Drucker & Scanner'''
+1. Klicke auf '''„Gerät hinzufügen“'''
+1. Scrolle runter → '''„Der gewünschte Drucker ist nicht aufgeführt“''' Wähle: '''„Einen Drucker über eine TCP/IP-Adresse oder einen Hostnamen hinzufügen“'''
+1. Bei Gerätetyp: '''„Web Services Device“** oder **„TCP/IP-Gerät“'''
+1. URL des Druckers eingeben, z. B.:  ''ipp://printserver/ipp/lz-dr1'' oder ''http://printserver:631/ipp/lz-dr1''
+1. Treiber auswählen (oder automatisch erkennen lassen)
 
-'''Methode 3:''' Über Systemsteuerung (klassisch)
+### Methode 3: Über Systemsteuerung (klassisch) ###
 
-# Öffne '''Systemsteuerung → Geräte und Drucker'''
-# Klick auf '''„Drucker hinzufügen“'''
-# → '''„Der gewünschte Drucker ist nicht aufgeführt“'''
-# → '''„Freigegebenen Drucker über Namen auswählen“'''
-# IPP-URL eingeben (wie oben)
+1. Öffne '''Systemsteuerung → Geräte und Drucker'''
+1. Klick auf '''„Drucker hinzufügen“'''
+1. → '''„Der gewünschte Drucker ist nicht aufgeführt“'''
+1. → '''„Freigegebenen Drucker über Namen auswählen“'''
+1. IPP-URL eingeben (wie oben)
 
 
 '''Treiber:'''
@@ -514,21 +522,21 @@ ipp://IP-Adresse/ipp/druckername
 
 Port 631 ist Standard für IPP.
 
-==Softwareverteilung==
+## Softwareverteilung ##
 Die Softwareverteilung erfolgt durch Installationssets. Die Installationssets verbinden Softwarepakete mit Installationszielen.  Installationsziele können Räume, Rechnerkonfigurationen oder einzelne Rechner sein.
 #Als erstes müssen die zu installierende Softwarepakete heruntergeladen werden: ''Administration'' -> ''Software'' -> ''Pakete herunterladen''. Abwarten bis die Pakete geladen sind.
 #Anschließend kann man unter ''Installationsset erstellen'' aus den heruntergeladenen Softwarepaketen und aus den Installationszielen Installationssets erstellen.
 #Zum Schluss wird für jeden Rechner durch die Auswertung der Installationssets je ein Salt-State-File erstellt: "/srv/salt/crx_device_<Gerätename>.sls". Es ist durchaus möglich, dass ein Gerät seine Softwarepakete aus verschiedenen Installationssets erhält.
 Wichtig ist zu wissen, dass nur FatClients in die Softwareverteilung einbezogen werden. Also müssen die Rechner einer Hardwarekonfiguration zugewiesen sein, in der der Gerätetyp als FatClient definiert wurde.
 
-==WLAN==
+## WLAN ##
 Die Dienste des CRANIX-Servers können selbstverständlich auch über WLAN erreicht werden. Der Server bietet verschiedene Möglichkeiten WLAN Geräte ins Netz einzubinden. Voraussetzung ist immer eine gut funktionierende WLAN-Infrastruktur. Ist der Einsatz von mehreren Accesspoints erforderlich, müssen diese unbedingt über Hardware- oder Softwarecontroller (besser Hardware) zentral verwaltetet (managed) werden.
 Wir können Sie natürlich bei, Planung, Beschaffung so wie Aufbau und Inbetriebnahme des WLAN-Netzwerks unterstützen, bzw. diese Schritte nach Ihren Anforderungen/Vorstellungen ausführen. 
 
-===WPA2-PSK===
+### WPA2-PSK ###
 Will man den WLAN-Zugang über WPA2-PSK (pre-shared key) bereitstellen müssen am CRANIX-Server keine weitere Einstellungen vorgenommen werden. Die Geräte können, wie Geräte mit Ethernetadaptern registriert werden. In diesem Fall können private Geräte nicht automatisch zu Benutzern zugeordnet werden, deshalb empfehlen wir für die Verwaltung von privaten Geräten (BYOD) den Einsatz des Radiusprotokolls (i.F). 
 
-===WPA2-Enterprise Radius===
+### WPA2-Enterprise Radius ###
 Der CRANIX-Server bietet auch einen Radiusserver für die personalisierte Anmeldung im WLAN an. Wenn Sie den Radiusserver benutzen wollen müssen Sie das Paket cranix-radius als Benutzer root auf dem Server installieren:
   zypper install cranix-radius
 Nach der Installation müssen noch folgende Konfigurationsschritte durchgeführt werden:
@@ -543,7 +551,7 @@ Nun ist das WLAN-Netz einsatzbereit und jeder Benutzer kann sich mit Benutzernam
 
 In erster Linie können nur Systemadministratoren Geräte an CRANIX-Server anmelden. Das ist natürlich sehr viel Arbeit, die vor allem in Schulen nicht zu bewältigen ist. Um diese Arbeit zu erleichtern wurden die sog. AdHocLan Räume eingeführt.
 
-==AdHocLan==
+## AdHocLan ##
 Mit dem AdHocLan Modul ist es möglich, dass die Benutzer ihre privaten Geräten im Intranet selbst registrieren. Dabei spielt es keine Rolle ob es sich um WLAN oder normalen Netzwerkanschluss handelt. Der Vorteil von dieser Methode ist, dass der Systemadministrator sich nicht um die Registrierung der einzelnen Geräte (i.d.R. BYOD) kümmern muss. Die Benutzer können ihre eigenen Geräte selber verwalten: Löschen bzw. die MAC-Adresse ändern. Weiterhin werden beim Löschen eines Benutzers auch seine Geräte gelöscht.
 Um AdHocLan nutzen zu können muss ein Systemadministrator AdHocLan-Räume erstellen und diese Benutzergruppen zuweisen. Beim Anlegen eines AdHocLan Raumes müssen folgende Parameter angegeben werden:
 *'''Name''' Der Name des Raumes
